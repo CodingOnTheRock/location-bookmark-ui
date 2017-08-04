@@ -11,6 +11,8 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
 // Application Modules
 import { AppComponent } from './app.component';
 
+import { HttpClient } from './core/http-client';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -22,7 +24,7 @@ import { AppComponent } from './app.component';
 
     Angular2FontawesomeModule
   ],
-  providers: [],
+  providers: [ HttpClient ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
