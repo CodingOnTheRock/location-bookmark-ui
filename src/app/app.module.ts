@@ -15,6 +15,7 @@ import { HttpClient } from './core/net/http-client';
 // Routing Modules
 import { HomeComponent } from './modules/home/home.component';
 import { SigninModule } from './modules/signin/signin.module';
+import { SignupModule } from './modules/signup/signup.module';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserAnimationsModule,
 
     SigninModule,
+    SignupModule,
     AppRoutingModule
   ],
   providers: [ HttpClient ],
