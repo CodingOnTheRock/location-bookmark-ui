@@ -14,6 +14,7 @@ import { HttpClient } from './core/net/http-client';
 
 // Routing Modules
 import { HomeComponent } from './modules/home/home.component';
+import { SigninModule } from './modules/signin/signin.module';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { AppRoutingModule } from './app-routing.module';
     Angular2FontawesomeModule,
     BrowserAnimationsModule,
 
+    SigninModule,
     AppRoutingModule
   ],
   providers: [ HttpClient ],

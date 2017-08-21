@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="progressbar">
+        <md-progress-bar mode="indeterminate" style="width: 100%;" *ngIf="isProcessing"></md-progress-bar>
+    </div>
+    <div class="panel">
+        <div class="header">
+            <div class="icon">
+                <md-icon class="material-icons icon-title">collections_bookmark</md-icon>
+            </div>
+            <div class="title">LOCATION BOOKMARK</div>
+        </div>
+        <div class="content">
+            <form>
+                <md-input-container>
+                    <md-icon mdPrefix class="material-icons icon">mail</md-icon>
+                    <input type="email" class="input" placeholder="Email" mdInput [formControl]="fc_email">
+                    <md-error *ngIf="fc_email.hasError('pattern')">
+                        Please enter a valid email address
+                    </md-error>
+                    <md-error *ngIf="fc_email.hasError('required')">
+                        Email is <strong>required</strong>
+                    </md-error>
+                </md-input-container>
+                <md-input-container>
+                    <md-icon mdPrefix class="material-icons icon">lock</md-icon>
+                    <input type="password" class="input" placeholder="Password" maxlength="50" mdInput [formControl]="fc_password">
+                    <md-error *ngIf="fc_password.hasError('required')">
+                        Password is <strong>required</strong>
+                    </md-error>
+                </md-input-container>
+            </form>
+        </div>
+        <div class="footer">
+            <button class="button" md-raised-button (click)="btnSigninClick()" [disabled]="isProcessing">Signin</button>
+            <div class="signup">
+                Don't have an account? <a>Signup</a>
+            </div>
+        </div>
+    </div>
+</div>
