@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
-import { environment } from './../../environments/environment';
+import { environment } from './../../../environments/environment';
 
 @Injectable()
 export class HttpClient {
     constructor(private http: Http) {}
 
     getToken() {
-        const token = localStorage.getItem(environment.security.token_key);
+        const token = localStorage.getItem(environment.application.security.token_key);
         if (token) {
             return token;
         }
@@ -17,7 +17,7 @@ export class HttpClient {
     }
 
     setToken(token) {
-        localStorage.setItem(environment.security.token_key, token);
+        localStorage.setItem(environment.application.security.token_key, token);
     }
 
     createAuthorizationHeader() {

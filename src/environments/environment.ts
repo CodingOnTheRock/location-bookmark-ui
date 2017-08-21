@@ -5,7 +5,9 @@
 
 export const environment = {
   production: false,
-  security: {
-    token_key: 'token'
+  application: {
+    security: {
+      token_key: 'token'
+    }
   }
 };
