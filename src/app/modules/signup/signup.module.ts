@@ -1,11 +1,14 @@
+// Core Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { MdInputModule, MdButtonModule, MdProgressBarModule } from '@angular/material';
-
+// Application Modules
+import { SharedModule } from './../shared/shared.module';
 import { SignupRoutingModule } from './signup-routing.module';
+
+// Components
 import { SignupComponent } from './signup.component';
 
 @NgModule({
@@ -15,9 +18,7 @@ import { SignupComponent } from './signup.component';
     ReactiveFormsModule,
     HttpModule,
 
-    MdInputModule,
-    MdButtonModule,
-    MdProgressBarModule,
+    SharedModule,
 
     SignupRoutingModule
   ],

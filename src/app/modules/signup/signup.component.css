@@ -1,20 +1,105 @@
-/* .container {
+.container {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
     height: 100vh;
-    text-align:center;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
-.panel {
+
+header {
+    height: 15vh;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+}
+
+header div.progressbar{
+    width: 100%;
+}
+
+section .panel {
     border: 1px solid #9bc2e6;
     border-radius: 10px;
-
     padding: 50px 50px;
-} */
+}
 
-.container {
+section .panel .header,
+section .panel .content form,
+section .panel .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px 0px;
+}
+
+section .panel .footer *{
+    margin: 10px 0px 10px 0px;
+}
+
+a {
+    text-decoration: none;
+}
+input,
+button {
+    font-family: 'Baloo Bhaijaan', cursive;
+    font-size: 1.5em;
+}
+
+input {
+    width: 400px;
+}
+
+input#firstname,
+input#lastname {
+    width: 200px;
+}
+
+button {
+    width: 400px;
+
+    color: #ffffff;
+    background-color: #475c6f;
+    border-radius: 5px;
+    height: 50px;
+}
+
+.icon {
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.50);
+}
+
+.icon-title {
+    font-size: 72px;
+    color: rgba(0, 0, 0, 0.50);
+}
+
+.title {
+    font-family: 'Baloo Bhaijaan', cursive;
+    font-size: 2em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .container {
     margin: 0px;
     padding: 0px;
 
@@ -64,7 +149,6 @@ form {
     margin: 10px 0px 10px 0px;
 }
 
-/* Elements */
 
 a {
     text-decoration: none;
@@ -97,4 +181,4 @@ a {
 .icon-title {
     font-size: 72px;
     color: rgba(0, 0, 0, 0.50);
-}
+} */
