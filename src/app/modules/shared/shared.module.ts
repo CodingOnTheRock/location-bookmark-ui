@@ -1,6 +1,8 @@
 // Core Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 // Material Design's Modules
 import { MdInputModule, MdButtonModule, MdProgressBarModule, MdSnackBarModule } from '@angular/material';
@@ -11,6 +13,9 @@ import { ProgressBarComponent } from './../../components/progressbar/progressbar
 @NgModule({
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpModule,
 
     MdInputModule,
     MdButtonModule,
@@ -21,6 +26,11 @@ import { ProgressBarComponent } from './../../components/progressbar/progressbar
     ProgressBarComponent
   ],
   exports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpModule,
+
     MdInputModule,
     MdButtonModule,
     MdProgressBarModule,
