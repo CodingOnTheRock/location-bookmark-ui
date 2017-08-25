@@ -8,7 +8,7 @@ import { HttpModule } from '@angular/http';
 import { MdInputModule, MdButtonModule, MdProgressBarModule, MdSnackBarModule } from '@angular/material';
 
 // Components
-import { ProgressBarComponent } from './../../components/progressbar/progressbar.component';
+import { ProgressBarComponent } from './components/progressbar/progressbar.component';
 
 @NgModule({
   imports: [
