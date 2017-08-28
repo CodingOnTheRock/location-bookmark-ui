@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 // Extended Modules
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Components
 import { AppComponent } from './app.component';
@@ -19,7 +18,6 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     Angular2FontawesomeModule,
-    BrowserAnimationsModule,
 
     HomeModule,
     SigninModule,

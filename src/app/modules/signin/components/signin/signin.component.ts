@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { EMAIL_REGEX } from './../../../../core/utils/regular-expression';
+import { Signin } from './../../models/signin.model';
+import { HttpService } from './../../../shared/services/http-service/http-service.service';
+import { LocalStorageUtils } from './../../../../core/browser/local-storage-utils';
+import { environment } from './../../../../../environments/environment';
 
 @Component({
   selector: 'app-signin',
@@ -18,7 +22,7 @@ export class SigninComponent implements OnInit {
   tbx_password: FormControl;
 
   // Constructor
-  constructor() { }
+  constructor(private httpService: HttpService, private localStorageUtils: LocalStorageUtils) { }
 
   ngOnInit() {
     this.initialSigninForm();
@@ -86,11 +90,38 @@ export class SigninComponent implements OnInit {
     this.enableSigninForm();
   }
 
-  signin() {
+  authenticationRequest() {
     this.beforeAuthenticationRequest();
 
-    // http request for authentication
+    const signinData = new Signin(this.tbx_email.value, this.tbx_password.value);
+    this.httpService.post('/api/authenticate', signinData)
+    .subscribe(
+      (data) => this.authenticationSuccess(data.json()),
+      (err) => this.authenticationFailed(err),
+      () => this.authenticationCompleted()
+    );
+  }
 
-    // this.afterAuthenticationRequest();
+  authenticationSuccess(data) {
+    if (!data.success) {
+      this.authenticationFailed(data.message);
+      return;
+    }
+
+    const token_key = environment.application.security.token_key;
+    const token = data.token;
+    this.localStorageUtils.setToken(token_key, token);
+  }
+
+  authenticationFailed(err) {
+    console.log(err);
+  }
+
+  authenticationCompleted() {
+    this.afterAuthenticationRequest();
+  }
+
+  signin() {
+    this.authenticationRequest();
   }
 }
