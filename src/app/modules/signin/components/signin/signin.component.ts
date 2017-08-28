@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { EMAIL_REGEX } from './../../../../core/utils/regular-expression';
 import { Signin } from './../../models/signin.model';
@@ -15,6 +16,8 @@ import { environment } from './../../../../../environments/environment';
 export class SigninComponent implements OnInit {
   // States
   isProcessing: Boolean = false;
+  isAuthFailed: Boolean = false;
+  authMsg: String = '';
 
   // Form Controls
   form_signin: FormGroup;
@@ -22,7 +25,10 @@ export class SigninComponent implements OnInit {
   tbx_password: FormControl;
 
   // Constructor
-  constructor(private httpService: HttpService, private localStorageUtils: LocalStorageUtils) { }
+  constructor(
+    private router: Router,
+    private httpService: HttpService,
+    private localStorageUtils: LocalStorageUtils) { }
 
   ngOnInit() {
     this.initialSigninForm();
@@ -108,13 +114,23 @@ export class SigninComponent implements OnInit {
       return;
     }
 
+    // Clear form error message
+    this.authMsg = '';
+    this.isAuthFailed = true;
+
+    // Set token
     const token_key = environment.application.security.token_key;
     const token = data.token;
     this.localStorageUtils.setToken(token_key, token);
+
+    // Redirect to Dashboard
+    this.router.navigate(['/dashboard']);
   }
 
   authenticationFailed(err) {
-    console.log(err);
+    // Set form error message
+    this.authMsg = err;
+    this.isAuthFailed = true;
   }
 
   authenticationCompleted() {

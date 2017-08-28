@@ -31,6 +31,9 @@
                             Password is <strong>required</strong>
                         </md-error>
                     </md-input-container>
+                    <md-error *ngIf="isAuthFailed">
+                        {{ authMsg }}
+                    </md-error>
                 </form>
             </div>
             <div class="footer">
