@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { EMAIL_REGEX } from './../../../../core/utils/regular-expression';
 import { Signin } from './../../models/signin.model';
@@ -27,6 +27,7 @@ export class SigninComponent implements OnInit {
   // Constructor
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private httpService: HttpService,
     private localStorageUtils: LocalStorageUtils) { }
 
@@ -35,17 +36,23 @@ export class SigninComponent implements OnInit {
   }
 
   initialSigninForm() {
-    this.tbx_email = new FormControl('', [
-      Validators.required,
-      Validators.pattern(EMAIL_REGEX)
-    ]);
-    this.tbx_password = new FormControl('', [
-      Validators.required
-    ]);
+    this.route
+      .queryParams
+      .subscribe(params => {
+        const email = params['email'];
 
-    this.form_signin = new FormGroup({
-      email: this.tbx_email,
-      password: this.tbx_password
+        this.tbx_email = new FormControl(email, [
+          Validators.required,
+          Validators.pattern(EMAIL_REGEX)
+        ]);
+        this.tbx_password = new FormControl('', [
+          Validators.required
+        ]);
+
+        this.form_signin = new FormGroup({
+          email: this.tbx_email,
+          password: this.tbx_password
+        });
     });
   }
 
@@ -81,6 +88,9 @@ export class SigninComponent implements OnInit {
   }
 
   beforeAuthenticationRequest() {
+    // Clear error
+    this.clearError();
+
     // Show progress bar
     this.isProcessing = true;
 
@@ -115,13 +125,10 @@ export class SigninComponent implements OnInit {
     }
 
     // Clear form error message
-    this.authMsg = '';
-    this.isAuthFailed = true;
+    this.clearError();
 
     // Set token
-    const token_key = environment.application.security.token_key;
-    const token = data.token;
-    this.localStorageUtils.setToken(token_key, token);
+    this.setToken(data.token);
 
     // Redirect to Dashboard
     this.router.navigate(['/dashboard']);
@@ -139,5 +146,15 @@ export class SigninComponent implements OnInit {
 
   signin() {
     this.authenticationRequest();
+  }
+
+  clearError() {
+    this.authMsg = '';
+    this.isAuthFailed = false;
+  }
+
+  setToken(token) {
+    const token_key = environment.application.security.token_key;
+    this.localStorageUtils.setToken(token_key, token);
   }
 }

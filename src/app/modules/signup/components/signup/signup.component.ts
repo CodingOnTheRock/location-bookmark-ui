@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { MdSnackBar } from '@angular/material';
 
 import { EMAIL_REGEX } from './../../../../core/utils/regular-expression';
+import { Signup } from './../models/signup.model';
+import { HttpService } from './../../../shared/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-signup',
@@ -10,6 +15,8 @@ import { EMAIL_REGEX } from './../../../../core/utils/regular-expression';
 })
 export class SignupComponent implements OnInit {
   isProcessing: Boolean = false;
+  isSignupFailed: Boolean = false;
+  signupMsg: String = '';
 
   form_signup: FormGroup;
   tbx_firstname: FormControl;
@@ -18,7 +25,11 @@ export class SignupComponent implements OnInit {
   tbx_password: FormControl;
   tbx_confirmpassword: FormControl;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private snackBar: MdSnackBar,
+    private httpService: HttpService
+  ) { }
 
   ngOnInit() {
     this.initialForm();
@@ -56,6 +67,20 @@ export class SignupComponent implements OnInit {
     return this.form_signup.valid;
   }
 
+  isSignupFormManualValid() {
+    const password = this.tbx_password.value;
+    const confirmPassword = this.tbx_confirmpassword.value;
+
+    if (password !== confirmPassword) {
+      this.signupMsg = 'Confirm password does not match password';
+      this.isSignupFailed = true;
+
+      return false;
+    }
+
+    return true;
+  }
+
   disableSignupForm() {
     this.form_signup.disable();
   }
@@ -79,10 +104,18 @@ export class SignupComponent implements OnInit {
       return;
     }
 
+    const isSignupFormManualValid = this.isSignupFormManualValid();
+    if (!isSignupFormManualValid) {
+      return;
+    }
+
     this.signup();
   }
 
   beforeSignupRequest() {
+    // Clear error
+    this.clearError();
+
     // Show progress bar
     this.isProcessing = true;
 
@@ -98,11 +131,53 @@ export class SignupComponent implements OnInit {
     this.enableSignupForm();
   }
 
-  signup() {
+  signupRequest() {
     this.beforeSignupRequest();
 
-    // http request for signup
+    const signupData = new Signup(this.tbx_firstname.value, this.tbx_lastname.value, this.tbx_email.value, this.tbx_password.value);
+    this.httpService.post('/api/signup', signupData)
+    .subscribe(
+      (data) => this.signupSuccess(data.json()),
+      (err) => this.signupFailed(err),
+      () => this.signupCompleted()
+    );
+  }
 
-    // this.afterSignupRequest();
+  signupSuccess(data) {
+    if (!data.success) {
+      this.signupFailed(data.message);
+      return;
+    }
+
+    // Clear form error message
+    this.clearError();
+
+    // Show message
+    this.snackBar.open('Signup successful', '', {
+      duration: 2000
+    });
+
+    // Redirect to Signin
+    setTimeout(() => {
+      this.router.navigate(['/signin'], { queryParams: { email: this.tbx_email.value } });
+    }, 2000);
+  }
+
+  signupFailed(err) {
+    this.signupMsg = err;
+    this.isSignupFailed = true;
+  }
+
+  signupCompleted() {
+    this.afterSignupRequest();
+  }
+
+  signup() {
+    this.signupRequest();
+  }
+
+  clearError() {
+    this.signupMsg = '';
+    this.isSignupFailed = false;
   }
 }

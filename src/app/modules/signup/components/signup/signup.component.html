@@ -67,6 +67,9 @@
                             Confirm Password is <strong>required</strong>
                         </md-error>
                     </md-input-container>
+                    <md-error *ngIf="isSignupFailed">
+                        {{ signupMsg }}
+                    </md-error>
                 </form>
             </div>
             <div class="footer">
