@@ -4,16 +4,16 @@
       [icon]="state.ui.toolbar.icon"
       [title]="state.ui.toolbar.title"
       [isIconActive]="state.ui.toolbar.isIconActive"
-      [username]="state.user.username"
+      [username]="base.profile.name"
       (onIconClicked)="onToolbarIconClicked($event)"
       (onAvatarClicked)="onToolbarAvatarClicked($event)"
       (onAvatarMouseEnterLeave)="onToolbarAvatarMouseEnterLeave($event)"></app-toolbar>
   </header>
   <section class="account-info" *ngIf="state.ui.accountInfo.isShow" [@fade]>
     <app-account-info 
-      [firstname]="state.user.firstname"
-      [lastname]="state.user.lastname"
-      [email]="state.user.email">
+      [firstname]="base.profile.firstname"
+      [lastname]="base.profile.lastname"
+      [email]="base.profile.email">
     </app-account-info>
   </section>
 </div>

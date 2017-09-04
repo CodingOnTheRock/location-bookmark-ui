@@ -1,7 +1,16 @@
+// Core Modules
 import { Component, trigger, transition, style, animate, OnInit } from '@angular/core';
 
+// Animations
 import { slideLTR, } from './../../../../core/animations/slide';
 import { fade } from './../../../../core/animations/fade';
+
+// Services
+import { HttpService } from './../../../shared/services/http-service/http-service.service';
+import { ProfileService } from './../../../shared/services/profile-service/profile-service.service';
+
+// Components
+import { BaseComponent } from './../../../shared/components/base/base.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,14 +24,8 @@ import { fade } from './../../../../core/animations/fade';
     fade
   ]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent extends BaseComponent implements OnInit {
   state = {
-    user: {
-      firstname: 'Jittichai',
-      lastname: 'Chetjaroenchat',
-      username: 'Anonymous',
-      email: 'j.chetjaroenchat@gmail.com'
-    },
     ui: {
       toolbar: {
         icon: 'dashboard',
@@ -35,7 +38,12 @@ export class DashboardComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  constructor(
+    public profileService: ProfileService,
+    private httpService: HttpService
+  ) {
+    super(profileService);
+  }
 
   ngOnInit() {
   }
@@ -50,7 +58,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onToolbarAvatarMouseEnterLeave(isShowUserInfo) {
-    // Do something
+    // No Action
   }
 
   showMenu(isShowMenu) {

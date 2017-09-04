@@ -7,7 +7,8 @@ export const environment = {
   production: false,
   application: {
     security: {
-      token_key: 'token'
+      token_key: 'token',
+      profile_key: 'profile'
     }
   },
   apis: {

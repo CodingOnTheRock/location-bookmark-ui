@@ -1,7 +1,15 @@
+// Core Modules
 import { Component, trigger, transition, style, animate, OnInit } from '@angular/core';
 
+// Animations
 import { slideLTR, } from './../../../../core/animations/slide';
 import { fade } from './../../../../core/animations/fade';
+
+// Services
+import { ProfileService } from './../../../shared/services/profile-service/profile-service.service';
+
+// Components
+import { BaseComponent } from './../../../shared/components/base/base.component';
 
 @Component({
   selector: 'app-bookmark',
@@ -15,14 +23,8 @@ import { fade } from './../../../../core/animations/fade';
     fade
   ]
 })
-export class BookmarkComponent implements OnInit {
+export class BookmarkComponent extends BaseComponent implements OnInit {
   state = {
-    user: {
-      firstname: 'Jittichai',
-      lastname: 'Chetjaroenchat',
-      username: 'Anonymous',
-      email: 'j.chetjaroenchat@gmail.com'
-    },
     ui: {
       toolbar: {
         icon: 'place',
@@ -35,7 +37,11 @@ export class BookmarkComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  constructor(
+    public profileService: ProfileService
+  ) {
+    super(profileService);
+  }
 
   ngOnInit() {
   }
@@ -50,7 +56,7 @@ export class BookmarkComponent implements OnInit {
   }
 
   onToolbarAvatarMouseEnterLeave(isShowUserInfo) {
-    // Do something
+    // No Action
   }
 
   onMapFocus() {

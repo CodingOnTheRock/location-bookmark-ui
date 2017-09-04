@@ -14,14 +14,15 @@ import { MdInputModule, MdButtonModule, MdProgressBarModule, MdSnackBarModule, M
 // Services
 import { HttpClient } from './../../core/net/http-client';
 import { HttpService } from './services/http-service/http-service.service';
+import { ProfileService } from './services/profile-service/profile-service.service';
 import { LocalStorageUtils } from './../../core/browser/local-storage-utils';
 import { RegularExpression } from './../../core/utils/regular-expression';
 
 // Components
+import { BaseComponent } from './components/base/base.component';
 import { ProgressBarComponent } from './components/progressbar/progressbar.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { AccountInfoComponent } from './components/account-info/account-info.component';
-
 import { MapComponent } from './components/map/map/map.component';
 
 // Environment
@@ -46,6 +47,7 @@ import { environment } from './../../../environments/environment';
     MdTooltipModule
   ],
   declarations: [
+    BaseComponent,
     ProgressBarComponent,
     ToolbarComponent,
     AccountInfoComponent,
@@ -54,6 +56,7 @@ import { environment } from './../../../environments/environment';
   providers: [
     HttpClient,
     HttpService,
+    ProfileService,
     LocalStorageUtils,
     RegularExpression
   ],
@@ -70,6 +73,7 @@ import { environment } from './../../../environments/environment';
     MdSnackBarModule,
     MdTooltipModule,
 
+    BaseComponent,
     ProgressBarComponent,
     ToolbarComponent,
     AccountInfoComponent,
