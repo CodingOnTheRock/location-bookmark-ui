@@ -14,22 +14,23 @@ import { HttpService } from './../../../shared/services/http-service/http-servic
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+  // States
   state = {
     isProcessing: false,
     isSignupFailed: false,
     signupMsg: ''
   };
-  // isProcessing: Boolean = false;
-  // isSignupFailed: Boolean = false;
-  // signupMsg: String = '';
 
+  // Form Controls
   form_signup: FormGroup;
   tbx_firstname: FormControl;
   tbx_lastname: FormControl;
+  tbx_name: FormControl;
   tbx_email: FormControl;
   tbx_password: FormControl;
   tbx_confirmpassword: FormControl;
 
+  // Constructor
   constructor(
     private router: Router,
     private snackBar: MdSnackBar,
@@ -47,6 +48,9 @@ export class SignupComponent implements OnInit {
     this.tbx_lastname = new FormControl('', [
       Validators.required
     ]);
+    this.tbx_name = new FormControl('', [
+      Validators.required
+    ]);
     this.tbx_email = new FormControl('', [
       Validators.required,
       Validators.pattern(EMAIL_REGEX)
@@ -62,6 +66,7 @@ export class SignupComponent implements OnInit {
     this.form_signup = new FormGroup({
       firstname: this.tbx_firstname,
       lastname: this.tbx_lastname,
+      name: this.tbx_name,
       email: this.tbx_email,
       password: this.tbx_password,
       comfirmpassword: this.tbx_confirmpassword
@@ -97,6 +102,7 @@ export class SignupComponent implements OnInit {
   raiseSignupFormError() {
     this.tbx_firstname.markAsTouched();
     this.tbx_lastname.markAsTouched();
+    this.tbx_name.markAsTouched();
     this.tbx_email.markAsTouched();
     this.tbx_password.markAsTouched();
     this.tbx_confirmpassword.markAsTouched();
@@ -139,7 +145,7 @@ export class SignupComponent implements OnInit {
   signupRequest() {
     this.beforeSignupRequest();
 
-    const signupData = new Signup(this.tbx_firstname.value, this.tbx_lastname.value, this.tbx_email.value, this.tbx_password.value);
+    const signupData = new Signup(this.tbx_firstname.value, this.tbx_lastname.value, this.tbx_name.value, this.tbx_email.value, this.tbx_password.value);
     this.httpService.post('/api/signup', signupData)
     .subscribe(
       (data) => this.signupSuccess(data.json()),

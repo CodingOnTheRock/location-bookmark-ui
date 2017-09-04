@@ -37,6 +37,14 @@
                         </span>
                     </div>
                     <md-input-container>
+                        <input type="text" id="name" placeholder="Name" maxlength="50" 
+                            mdInput 
+                            [formControl]="tbx_name"> 
+                        <md-error *ngIf="tbx_name.hasError('required')">
+                            Name is <strong>required</strong>
+                        </md-error>
+                    </md-input-container>
+                    <md-input-container>
                         <input type="text" id="email" placeholder="Email" maxlength="100" 
                             mdInput 
                             [formControl]="tbx_email"> 
