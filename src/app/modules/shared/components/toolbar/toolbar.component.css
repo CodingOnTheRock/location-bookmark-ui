@@ -1,0 +1,69 @@
+.container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.toolbar {
+    color: white;
+    background-color: #758593;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.icon{
+    margin: 10px 5px 10px 10px;
+}
+
+.avatar {
+    margin: 10px 10px 10px 5px;
+}
+
+.title {
+    margin: 10px 0px 10px 5px;
+}
+
+.name {
+    margin: 10px 5px 10px 0px;
+}
+
+.icon,
+.avatar {
+    cursor: pointer;
+}
+
+.icon {
+    font-size: 48px;
+}
+
+.title,
+.name {
+    font-family: 'Baloo Bhaijaan', cursive;
+}
+
+.title {
+    font-size: 2.2em;
+}
+
+.name {
+    font-size: 1.7em;
+}
+
+.space {
+    flex: 1 1 auto;
+}
+
+.avatar {
+    background-image: url('/assets/images/avatar.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+
+    height: 45px;
+    width: 45px;
+}

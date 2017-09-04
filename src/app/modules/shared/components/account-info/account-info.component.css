@@ -1,0 +1,83 @@
+.container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content,
+.footer {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 auto;
+}
+
+.footer {
+    height: 30%;
+    padding: 15px;
+    background-color: #758593;
+    border-top: 1px solid #c4c4c4;
+
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.left,
+.right {
+    padding: 15px;
+}
+
+.left {
+    width: 40%;
+    text-align: center;
+}
+
+.right {
+    width: 60%;
+}
+
+.name,
+.email,
+.account {
+    padding: 5px 0px 0px 0px;
+}
+
+.name,
+.email {
+    font-size: 0.9em;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.image {
+    font-size: 96px;
+    color: rgba(0, 0, 0, 0.50);
+}
+
+.button {
+    cursor: pointer;
+}
+
+.account {
+    font-size: 48px;
+    color: #758593;
+}
+
+.account:hover {
+    color: #4d90fe;
+}
+
+.logout {
+    font-size: 48px;
+    color: #c4c4c4;
+}
+
+.logout:hover {
+    color: #ffffff;
+}

@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="toolbar">
+    <md-icon class="material-icons icon" (click)="iconClick();">{{ icon }}</md-icon>
+    <span class="title">{{ title }}</span>
+    <span class="space"></span>
+    <div class="name" *ngIf="isShowUsername" [@slideLTR]>{{ username }}</div>
+    <div class="avatar"
+      (click)="avatarClick()"
+      (mouseenter)="avatarMouseEnter()"
+      (mouseleave)="avatarMouseLeave()"></div>
+  </div>
+</div>

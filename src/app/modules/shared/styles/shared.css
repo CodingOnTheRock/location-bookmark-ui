@@ -1,0 +1,27 @@
+.container {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+
+header,
+section.account-info {
+    width: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    z-index: 1000;
+}
+
+section.account-info {
+    top: 73px;
+    left: calc(100% - 330px);
+
+    width: 325px;
+    height: 200px;
+
+    background-color: #ffffff;
+    border: 1px solid #c4c4c4;
+}

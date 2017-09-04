@@ -15,9 +15,11 @@ import { environment } from './../../../../../environments/environment';
 })
 export class SigninComponent implements OnInit {
   // States
-  isProcessing: Boolean = false;
-  isAuthFailed: Boolean = false;
-  authMsg: String = '';
+  state = {
+    isProcessing: false,
+    isAuthFailed: false,
+    authMsg: ''
+  };
 
   // Form Controls
   form_signin: FormGroup;
@@ -92,7 +94,7 @@ export class SigninComponent implements OnInit {
     this.clearError();
 
     // Show progress bar
-    this.isProcessing = true;
+    this.state.isProcessing = true;
 
     // Disable signin form
     this.disableSigninForm();
@@ -100,7 +102,7 @@ export class SigninComponent implements OnInit {
 
   afterAuthenticationRequest() {
     // Hide progress bar
-    this.isProcessing = false;
+    this.state.isProcessing = false;
 
     // Enable signin form
     this.enableSigninForm();
@@ -136,8 +138,8 @@ export class SigninComponent implements OnInit {
 
   authenticationFailed(err) {
     // Set form error message
-    this.authMsg = err;
-    this.isAuthFailed = true;
+    this.state.authMsg = err;
+    this.state.isAuthFailed = true;
   }
 
   authenticationCompleted() {
@@ -149,8 +151,8 @@ export class SigninComponent implements OnInit {
   }
 
   clearError() {
-    this.authMsg = '';
-    this.isAuthFailed = false;
+    this.state.authMsg = '';
+    this.state.isAuthFailed = false;
   }
 
   setToken(token) {

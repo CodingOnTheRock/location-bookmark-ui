@@ -9,5 +9,10 @@ export const environment = {
     security: {
       token_key: 'token'
     }
+  },
+  apis: {
+    google_map: {
+      key: 'AIzaSyD6inFvJXlyP2HYPouCdT8kTpdk46HFw3E'
+    }
   }
 };

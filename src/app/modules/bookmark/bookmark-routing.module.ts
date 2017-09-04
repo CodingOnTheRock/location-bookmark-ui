@@ -1,10 +1,13 @@
+// Core Modules
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { SignupComponent } from './components/signup/signup.component';
+// Components
+import { BookmarkComponent } from './components/bookmark/bookmark.component';
 
+// Routes
 const routes: Routes = [
-  { path: 'signup', component: SignupComponent }
+  { path: 'bookmark', component: BookmarkComponent }
 ];
 
 @NgModule({
@@ -13,7 +16,6 @@ const routes: Routes = [
   ],
   exports: [
     RouterModule
-  ],
-  declarations: []
+  ]
 })
-export class SignupRoutingModule { }
+export class BookmarkRoutingModule { }

@@ -1,14 +1,14 @@
 <div class="container">
     <header>
         <div class="progressbar">
-            <app-progressbar [isShow]="isProcessing"></app-progressbar>
+            <app-progressbar [isShow]="state.isProcessing"></app-progressbar>
         </div>
     </header>
     <section>
         <div class="panel">
             <div class="header">
                 <div class="icon">
-                    <md-icon class="material-icons icon-title">collections_bookmark</md-icon>
+                    <md-icon class="material-icons icon-title">place</md-icon>
                 </div>
                 <div class="title">LOCATION BOOKMARK</div>
             </div>
@@ -31,13 +31,13 @@
                             Password is <strong>required</strong>
                         </md-error>
                     </md-input-container>
-                    <md-error *ngIf="isAuthFailed">
-                        {{ authMsg }}
+                    <md-error *ngIf="state.isAuthFailed">
+                        {{ state.authMsg }}
                     </md-error>
                 </form>
             </div>
             <div class="footer">
-                <button md-raised-button (click)="signinFormSubmit()" [disabled]="isProcessing">Signin</button>
+                <button md-raised-button (click)="signinFormSubmit()" [disabled]="state.isProcessing">Signin</button>
                 <div class="signup">
                     Don't have an account? <a href="#" [routerLink]="['/signup']">Signup</a>
                 </div>

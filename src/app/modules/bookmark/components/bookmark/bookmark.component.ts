@@ -4,10 +4,10 @@ import { slideLTR, } from './../../../../core/animations/slide';
 import { fade } from './../../../../core/animations/fade';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: 'app-bookmark',
+  templateUrl: './bookmark.component.html',
   styleUrls: [
-    './dashboard.component.css',
+    './bookmark.component.css',
     './../../../shared/styles/shared.css'
   ],
   animations: [
@@ -15,7 +15,7 @@ import { fade } from './../../../../core/animations/fade';
     fade
   ]
 })
-export class DashboardComponent implements OnInit {
+export class BookmarkComponent implements OnInit {
   state = {
     user: {
       firstname: 'Jittichai',
@@ -25,8 +25,8 @@ export class DashboardComponent implements OnInit {
     },
     ui: {
       toolbar: {
-        icon: 'dashboard',
-        title: 'Dashboard',
+        icon: 'place',
+        title: 'Bookmark',
         isIconActive: false
       },
       accountInfo: {
@@ -51,6 +51,11 @@ export class DashboardComponent implements OnInit {
 
   onToolbarAvatarMouseEnterLeave(isShowUserInfo) {
     // Do something
+  }
+
+  onMapFocus() {
+    this.showMenu(false);
+    this.showAccountInfo(false);
   }
 
   showMenu(isShowMenu) {

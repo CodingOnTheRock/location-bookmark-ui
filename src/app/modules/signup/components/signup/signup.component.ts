@@ -14,9 +14,14 @@ import { HttpService } from './../../../shared/services/http-service/http-servic
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  isProcessing: Boolean = false;
-  isSignupFailed: Boolean = false;
-  signupMsg: String = '';
+  state = {
+    isProcessing: false,
+    isSignupFailed: false,
+    signupMsg: ''
+  };
+  // isProcessing: Boolean = false;
+  // isSignupFailed: Boolean = false;
+  // signupMsg: String = '';
 
   form_signup: FormGroup;
   tbx_firstname: FormControl;
@@ -72,8 +77,8 @@ export class SignupComponent implements OnInit {
     const confirmPassword = this.tbx_confirmpassword.value;
 
     if (password !== confirmPassword) {
-      this.signupMsg = 'Confirm password does not match password';
-      this.isSignupFailed = true;
+      this.state.signupMsg = 'Confirm password does not match password';
+      this.state.isSignupFailed = true;
 
       return false;
     }
@@ -117,7 +122,7 @@ export class SignupComponent implements OnInit {
     this.clearError();
 
     // Show progress bar
-    this.isProcessing = true;
+    this.state.isProcessing = true;
 
     // Disable signin form
     this.disableSignupForm();
@@ -125,7 +130,7 @@ export class SignupComponent implements OnInit {
 
   afterSignupRequest() {
     // Hide progress bar
-    this.isProcessing = false;
+    this.state.isProcessing = false;
 
     // Enable signin form
     this.enableSignupForm();
@@ -164,8 +169,8 @@ export class SignupComponent implements OnInit {
   }
 
   signupFailed(err) {
-    this.signupMsg = err;
-    this.isSignupFailed = true;
+    this.state.signupMsg = err;
+    this.state.isSignupFailed = true;
   }
 
   signupCompleted() {
@@ -177,7 +182,7 @@ export class SignupComponent implements OnInit {
   }
 
   clearError() {
-    this.signupMsg = '';
-    this.isSignupFailed = false;
+    this.state.signupMsg = '';
+    this.state.isSignupFailed = false;
   }
 }
