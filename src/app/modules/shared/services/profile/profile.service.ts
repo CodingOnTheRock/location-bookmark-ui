@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 // Services
-import { HttpService } from './../http-service/http-service.service';
+import { HttpService } from './../http/http.service';
 import { LocalStorageUtils } from './../../../../core/browser/local-storage-utils';
 import { environment } from './../../../../../environments/environment';
 
@@ -50,12 +50,17 @@ export class ProfileService {
 
   setProfile(profile) {
     const key = environment.application.security.profile_key;
-    this.localStorageUtils.setToken(key, profile);
+    this.localStorageUtils.set(key, profile);
+  }
+
+  clearProfile() {
+    const key = environment.application.security.profile_key;
+    this.localStorageUtils.remove(key);
   }
 
   getProfileFromLocalStorage() {
     const key = environment.application.security.profile_key;
-    const profile = this.localStorageUtils.getToken(key);
+    const profile = this.localStorageUtils.get(key);
 
     return profile;
   }

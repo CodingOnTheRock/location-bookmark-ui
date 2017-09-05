@@ -1,12 +1,15 @@
+// Core Modules
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { MdSnackBar } from '@angular/material';
-
+// Services
 import { EMAIL_REGEX } from './../../../../core/utils/regular-expression';
-import { Signup } from './../models/signup.model';
-import { HttpService } from './../../../shared/services/http-service/http-service.service';
+import { Signup } from './../../models/signup.model';
+import { HttpService } from './../../../shared/services/http/http.service';
+
+// Components
+import { MdSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-signup',

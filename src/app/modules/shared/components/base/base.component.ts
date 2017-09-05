@@ -1,18 +1,25 @@
 // Core Modules
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 // Services
-import { ProfileService } from './../../../shared/services/profile-service/profile-service.service';
+import { ProfileService } from './../../../shared/services/profile/profile.service';
 
 @Component({
   template: ''
 })
 export class BaseComponent {
   base = {
-    profile: {}
+    profile: {
+      firstname: '',
+      lastname: '',
+      name: '',
+      email: ''
+    }
   };
 
   constructor(
+    public router: Router,
     public profileService: ProfileService
   ) {
     this.customInit();
@@ -30,5 +37,9 @@ export class BaseComponent {
 
   manageProfile(profile) {
     this.base.profile = profile;
+  }
+
+  signout() {
+    this.router.navigate(['/signout']);
   }
 }

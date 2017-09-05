@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { HomeModule } from './modules/home/home.module';
 import { SigninModule } from './modules/signin/signin.module';
 import { SignupModule } from './modules/signup/signup.module';
+import { SignoutModule } from './modules/signout/signout.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
     HomeModule,
     SigninModule,
     SignupModule,
+    SignoutModule,
     DashboardModule,
     BookmarkModule,
     AppRoutingModule

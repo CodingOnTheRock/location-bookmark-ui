@@ -13,10 +13,14 @@ import { MdInputModule, MdButtonModule, MdProgressBarModule, MdSnackBarModule, M
 
 // Services
 import { HttpClient } from './../../core/net/http-client';
-import { HttpService } from './services/http-service/http-service.service';
-import { ProfileService } from './services/profile-service/profile-service.service';
 import { LocalStorageUtils } from './../../core/browser/local-storage-utils';
 import { RegularExpression } from './../../core/utils/regular-expression';
+import { HttpService } from './services/http/http.service';
+import { AuthService } from './services/auth/auth.service';
+import { ProfileService } from './services/profile/profile.service';
+
+// Guards
+import { AuthGuard } from './guards/auth/auth.guard';
 
 // Components
 import { BaseComponent } from './components/base/base.component';
@@ -55,10 +59,14 @@ import { environment } from './../../../environments/environment';
   ],
   providers: [
     HttpClient,
-    HttpService,
-    ProfileService,
     LocalStorageUtils,
-    RegularExpression
+    RegularExpression,
+
+    HttpService,
+    AuthService,
+    ProfileService,
+
+    AuthGuard
   ],
   exports: [
     BrowserModule,

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+// Core Modules
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-account-info',
@@ -9,10 +10,14 @@ export class AccountInfoComponent implements OnInit {
   @Input() firstname: String = '';
   @Input() lastname: String = '';
   @Input() email: String = '';
+  @Output() onSignOutClicked = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  signOutClick() {
+    this.onSignOutClicked.emit();
+  }
 }

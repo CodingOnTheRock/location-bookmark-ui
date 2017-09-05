@@ -13,7 +13,8 @@
     <app-account-info 
       [firstname]="base.profile.firstname"
       [lastname]="base.profile.lastname"
-      [email]="base.profile.email">
+      [email]="base.profile.email"
+      (onSignOutClicked)="onAccountInfoSignOutClicked()">
     </app-account-info>
   </section>
 </div>

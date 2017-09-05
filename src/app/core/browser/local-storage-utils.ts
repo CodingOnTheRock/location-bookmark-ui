@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 export class LocalStorageUtils {
     constructor() {}
 
-    getToken(key: string) {
+    get(key: string) {
         const token = localStorage.getItem(key);
         if (token) {
             return token;
@@ -14,7 +14,11 @@ export class LocalStorageUtils {
         return null;
     }
 
-    setToken(key: string, token: string) {
+    set(key: string, token: string) {
         localStorage.setItem(key, token);
+    }
+
+    remove(key: string) {
+        localStorage.removeItem(key);
     }
 }

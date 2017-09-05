@@ -1,13 +1,14 @@
 // Core Modules
 import { Component, trigger, transition, style, animate, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 // Animations
 import { slideLTR, } from './../../../../core/animations/slide';
 import { fade } from './../../../../core/animations/fade';
 
 // Services
-import { HttpService } from './../../../shared/services/http-service/http-service.service';
-import { ProfileService } from './../../../shared/services/profile-service/profile-service.service';
+import { HttpService } from './../../../shared/services/http/http.service';
+import { ProfileService } from './../../../shared/services/profile/profile.service';
 
 // Components
 import { BaseComponent } from './../../../shared/components/base/base.component';
@@ -39,10 +40,14 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   };
 
   constructor(
+    public router: Router,
     public profileService: ProfileService,
     private httpService: HttpService
   ) {
-    super(profileService);
+    super(
+      router,
+      profileService
+    );
   }
 
   ngOnInit() {
@@ -67,5 +72,9 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   showAccountInfo(isShowAccountInfo) {
     this.state.ui.accountInfo.isShow = isShowAccountInfo;
+  }
+
+  onAccountInfoSignOutClicked() {
+    super.signout();
   }
 }

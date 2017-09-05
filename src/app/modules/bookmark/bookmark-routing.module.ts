@@ -2,12 +2,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+// Guards
+import { AuthGuard } from './../shared/guards/auth/auth.guard';
+
 // Components
 import { BookmarkComponent } from './components/bookmark/bookmark.component';
 
 // Routes
 const routes: Routes = [
-  { path: 'bookmark', component: BookmarkComponent }
+  { path: 'bookmark', component: BookmarkComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

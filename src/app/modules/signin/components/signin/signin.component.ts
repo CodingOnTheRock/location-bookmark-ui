@@ -1,11 +1,16 @@
+// Core Modules
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
+// Services
 import { EMAIL_REGEX } from './../../../../core/utils/regular-expression';
 import { Signin } from './../../models/signin.model';
-import { HttpService } from './../../../shared/services/http-service/http-service.service';
+import { HttpService } from './../../../shared/services/http/http.service';
+import { AuthService } from './../../../shared/services/auth/auth.service';
 import { LocalStorageUtils } from './../../../../core/browser/local-storage-utils';
+
+// Environment
 import { environment } from './../../../../../environments/environment';
 
 @Component({
@@ -31,6 +36,7 @@ export class SigninComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private httpService: HttpService,
+    private authService: AuthService,
     private localStorageUtils: LocalStorageUtils) { }
 
   ngOnInit() {
@@ -130,7 +136,7 @@ export class SigninComponent implements OnInit {
     this.clearError();
 
     // Set token
-    this.setToken(data.token);
+    this.authService.setToken(data.token);
 
     // Redirect to Dashboard
     this.router.navigate(['/dashboard']);
@@ -153,10 +159,5 @@ export class SigninComponent implements OnInit {
   clearError() {
     this.state.authMsg = '';
     this.state.isAuthFailed = false;
-  }
-
-  setToken(token) {
-    const token_key = environment.application.security.token_key;
-    this.localStorageUtils.setToken(token_key, token);
   }
 }
