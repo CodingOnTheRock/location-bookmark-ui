@@ -13,6 +13,7 @@ import { BookmarkComponent } from './components/bookmark/bookmark.component';
     SharedModule,
     BookmarkRoutingModule
   ],
+  providers: [],
   declarations: [
     BookmarkComponent
   ]

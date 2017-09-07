@@ -13,6 +13,7 @@ import { HomeComponent } from './components/home/home.component';
     SharedModule,
     HomeRoutingModule
   ],
+  providers: [],
   declarations: [
     HomeComponent
   ]

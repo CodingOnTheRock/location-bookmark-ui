@@ -9,6 +9,10 @@ import { fade } from './../../../../core/animations/fade';
 // Services
 import { ProfileService } from './../../../shared/services/profile/profile.service';
 
+// Models
+import { Coords } from './../../../shared/models/map/coords.model';
+import { Marker } from './../../../shared/models/map/marker.model';
+
 // Components
 import { BaseComponent } from './../../../shared/components/base/base.component';
 
@@ -34,9 +38,19 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
       },
       accountInfo: {
         isShow: false
+      },
+      map: {
+        coordinates: {
+          lat: 0,
+          lng: 0
+        },
+        zoom: 16
       }
     }
   };
+
+  coords: Coords = new Coords(0, 0);
+  markers: Array<Marker> = [];
 
   constructor(
     public router: Router,

@@ -1,4 +1,9 @@
+// Core Modules
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+// Models
+import { Coords } from './../../../models/map/coords.model';
+import { Marker } from './../../../models/map/marker.model';
 
 @Component({
   selector: 'app-map',
@@ -6,11 +11,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  @Input() showOverlay: Boolean = true;
+  @Input() coords: Coords = new Coords(0, 0);
+  @Input() markers: Array<Marker> = [];
+  @Input() showOverlay: Boolean = false;
   @Output() onFocus = new EventEmitter();
-
-  lat: Number = 13.635526;
-  lng: Number = 100.716373;
 
   constructor() { }
 

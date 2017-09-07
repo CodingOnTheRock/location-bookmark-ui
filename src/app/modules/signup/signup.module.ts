@@ -13,6 +13,7 @@ import { SignupComponent } from './components/signup/signup.component';
     SharedModule,
     SignupRoutingModule
   ],
+  providers: [],
   declarations: [
     SignupComponent
   ]

@@ -13,6 +13,7 @@ import { SigninComponent } from './components/signin/signin.component';
     SharedModule,
     SigninRoutingModule
   ],
+  providers: [],
   declarations: [
     SigninComponent
   ]

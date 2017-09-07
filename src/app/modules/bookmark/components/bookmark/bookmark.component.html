@@ -10,7 +10,6 @@
       (onAvatarMouseEnterLeave)="onToolbarAvatarMouseEnterLeave($event)"></app-toolbar>
   </header>
   <aside *ngIf="state.ui.toolbar.isIconActive" [@slideLTR]>
-    <div>Aside here</div>
   </aside>
   <section class="account-info" *ngIf="state.ui.accountInfo.isShow" [@fade]>
     <app-account-info 
@@ -22,6 +21,8 @@
   </section>
   <section class="map">
     <app-map 
+      [coords]="coords"
+      [markers]="markers"
       [showOverlay]="state.ui.toolbar.isIconActive"
       (onFocus)="onMapFocus($event)"></app-map>
   </section>

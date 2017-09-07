@@ -13,6 +13,7 @@ import { SignoutComponent } from './components/signout/signout.component';
     SharedModule,
     SignoutRoutingModule
   ],
+  providers: [],
   declarations: [
     SignoutComponent
   ]

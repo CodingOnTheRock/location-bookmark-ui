@@ -1,14 +1,16 @@
 <div class="container">
   <div class="overlay" *ngIf="showOverlay" (click)="focus()"></div>
   <agm-map class="map" 
-    [latitude]="lat" 
-    [longitude]="lng" 
+    [latitude]="coords.lat" 
+    [longitude]="coords.lng" 
     [zoom]="16"
     (mapClick)="onMapClick($event)"
     (mapDblClick)="onMapDblClick($event)"
     (mapRightClick)="onMapRightClick($event)"
     (boundsChange)="onBoundsChange($event)"
     (idle)="onIdle($event)">
-    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    <div *ngFor="let marker of markers">
+      <agm-marker [latitude]="marker.coords.lat" [longitude]="marker.coords.lng"></agm-marker>
+    </div>
   </agm-map>
 </div>

@@ -13,6 +13,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     SharedModule,
     DashboardRoutingModule
   ],
+  providers: [],
   declarations: [
     DashboardComponent
   ]
