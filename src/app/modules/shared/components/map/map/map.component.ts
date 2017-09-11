@@ -12,6 +12,7 @@ import { Marker } from './../../../models/map/marker.model';
 })
 export class MapComponent implements OnInit {
   @Input() coords: Coords = new Coords(0, 0);
+  @Input() zoom: Number = 14;
   @Input() markers: Array<Marker> = [];
   @Input() showOverlay: Boolean = false;
   @Output() onFocus = new EventEmitter();

@@ -31,7 +31,7 @@ export class BaseComponent {
       this.manageProfile(profile);
     })
     .catch((err) => {
-      throw err;
+      // No Action
     });
   }
 

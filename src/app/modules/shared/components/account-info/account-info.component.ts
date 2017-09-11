@@ -10,7 +10,7 @@ export class AccountInfoComponent implements OnInit {
   @Input() firstname: String = '';
   @Input() lastname: String = '';
   @Input() email: String = '';
-  @Output() onSignOutClicked = new EventEmitter();
+  @Output() onSignOutClick = new EventEmitter();
 
   constructor() { }
 
@@ -18,6 +18,6 @@ export class AccountInfoComponent implements OnInit {
   }
 
   signOutClick() {
-    this.onSignOutClicked.emit();
+    this.onSignOutClick.emit();
   }
 }

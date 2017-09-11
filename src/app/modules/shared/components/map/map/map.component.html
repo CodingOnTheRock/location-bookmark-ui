@@ -3,14 +3,19 @@
   <agm-map class="map" 
     [latitude]="coords.lat" 
     [longitude]="coords.lng" 
-    [zoom]="16"
+    [zoom]="zoom"
     (mapClick)="onMapClick($event)"
     (mapDblClick)="onMapDblClick($event)"
     (mapRightClick)="onMapRightClick($event)"
     (boundsChange)="onBoundsChange($event)"
     (idle)="onIdle($event)">
     <div *ngFor="let marker of markers">
-      <agm-marker [latitude]="marker.coords.lat" [longitude]="marker.coords.lng"></agm-marker>
+      <agm-marker 
+        [iconUrl]="marker.icon"
+        [label]="marker.label"
+        [title]="marker.title"
+        [latitude]="marker.coords.lat" 
+        [longitude]="marker.coords.lng"></agm-marker>
     </div>
   </agm-map>
 </div>

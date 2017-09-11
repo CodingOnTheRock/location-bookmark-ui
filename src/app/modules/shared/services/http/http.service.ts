@@ -15,9 +15,14 @@ export class HttpService {
     private authService: AuthService
   ) { }
 
-  createAuthorizationHeader() {
-    const headers = new Headers();
+  createHttpHeaders() {
+    let headers = new Headers();
+    headers = this.createAuthorizationHeader(headers);
 
+    return headers;
+  }
+
+  createAuthorizationHeader(headers: Headers) {
     // Set authorization header
     const token = this.authService.getToken();
     if (token) {
@@ -29,29 +34,29 @@ export class HttpService {
 
   // GET
   get(url) {
-    const headers = this.createAuthorizationHeader();
+    const headers = this.createHttpHeaders();
 
     return this.httpClient.get(url, { headers: headers });
   }
 
   // POST
   post(url, data) {
-      const headers = this.createAuthorizationHeader();
+    const headers = this.createHttpHeaders();
 
-      return this.httpClient.post(url, data, { headers: headers });
+    return this.httpClient.post(url, data, { headers: headers });
   }
 
   // PUT
   put(url, data) {
-      const headers = this.createAuthorizationHeader();
+    const headers = this.createHttpHeaders();
 
-      return this.httpClient.put(url, data, { headers: headers });
+    return this.httpClient.put(url, data, { headers: headers });
   }
 
   // DELETE
   delete(url) {
-      const headers = this.createAuthorizationHeader();
+    const headers = this.createHttpHeaders();
 
-      return this.httpClient.delete(url, { headers: headers });
+    return this.httpClient.delete(url, { headers: headers });
   }
 }

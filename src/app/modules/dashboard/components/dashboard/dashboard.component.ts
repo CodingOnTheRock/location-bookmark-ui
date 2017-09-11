@@ -53,12 +53,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   ngOnInit() {
   }
 
-  onToolbarIconClicked(isIconActive) {
-    this.showMenu(isIconActive);
-    this.showAccountInfo(false);
+  onToolbarIconClick(isIconActive) {
+    // No Action
   }
 
-  onToolbarAvatarClicked() {
+  onToolbarAvatarClick() {
     this.showAccountInfo(!this.state.ui.accountInfo.isShow);
   }
 
@@ -66,15 +65,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     // No Action
   }
 
-  showMenu(isShowMenu) {
-    this.state.ui.toolbar.isIconActive = isShowMenu;
-  }
-
   showAccountInfo(isShowAccountInfo) {
     this.state.ui.accountInfo.isShow = isShowAccountInfo;
   }
 
-  onAccountInfoSignOutClicked() {
+  onAccountInfoSignOutClick() {
     super.signout();
   }
 }

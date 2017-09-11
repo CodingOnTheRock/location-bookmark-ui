@@ -15,8 +15,8 @@ export class ToolbarComponent implements OnInit {
   @Input() title: String = '';
   @Input() username: String = '';
   @Input() isIconActive: Boolean = false;
-  @Output() onIconClicked: EventEmitter<Boolean> = new EventEmitter<Boolean>();
-  @Output() onAvatarClicked = new EventEmitter();
+  @Output() onIconClick: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+  @Output() onAvatarClick = new EventEmitter();
   @Output() onAvatarMouseEnterLeave: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   isShowUsername: Boolean = false;
@@ -28,11 +28,11 @@ export class ToolbarComponent implements OnInit {
 
   iconClick() {
     this.isIconActive = !this.isIconActive;
-    this.onIconClicked.emit(this.isIconActive);
+    this.onIconClick.emit(this.isIconActive);
   }
 
   avatarClick() {
-    this.onAvatarClicked.emit();
+    this.onAvatarClick.emit();
   }
 
   avatarMouseEnter() {

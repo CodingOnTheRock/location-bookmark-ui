@@ -32,10 +32,8 @@ export class SignoutComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.clearSession();
-      this.redirectToSignin();
-    }, 1000);
+    this.clearSession();
+    this.redirectToSignin();
   }
 
   clearSession() {

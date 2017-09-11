@@ -9,7 +9,7 @@ import { HttpModule } from '@angular/http';
 import { AgmCoreModule } from '@agm/core';
 
 // Material Design's Modules
-import { MdInputModule, MdButtonModule, MdProgressBarModule, MdSnackBarModule, MdTooltipModule } from '@angular/material';
+import { MdInputModule, MdButtonModule, MdProgressBarModule, MdSnackBarModule, MdTooltipModule, MdAutocompleteModule } from '@angular/material';
 
 // Services
 import { HttpClient } from './../../core/net/http-client';
@@ -48,7 +48,8 @@ import { environment } from './../../../environments/environment';
     MdButtonModule,
     MdProgressBarModule,
     MdSnackBarModule,
-    MdTooltipModule
+    MdTooltipModule,
+    MdAutocompleteModule
   ],
   declarations: [
     BaseComponent,
@@ -80,6 +81,7 @@ import { environment } from './../../../environments/environment';
     MdProgressBarModule,
     MdSnackBarModule,
     MdTooltipModule,
+    MdAutocompleteModule,
 
     BaseComponent,
     ProgressBarComponent,

@@ -32,13 +32,12 @@
     margin: 10px 5px 10px 0px;
 }
 
-.icon,
-.avatar {
-    cursor: pointer;
-}
-
 .icon {
     font-size: 48px;
+}
+
+.avatar {
+    cursor: pointer;
 }
 
 .title,

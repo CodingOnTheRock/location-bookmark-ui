@@ -5,17 +5,24 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from './../shared/shared.module';
 import { BookmarkRoutingModule } from './bookmark-routing.module';
 
+// Services
+import { BookmarkService } from './services/bookmark.service';
+
 // Components
 import { BookmarkComponent } from './components/bookmark/bookmark.component';
+import { SearchBoxComponent } from './components/search-box/search-box.component';
 
 @NgModule({
   imports: [
     SharedModule,
     BookmarkRoutingModule
   ],
-  providers: [],
+  providers: [
+    BookmarkService
+  ],
   declarations: [
-    BookmarkComponent
+    BookmarkComponent,
+    SearchBoxComponent
   ]
 })
 export class BookmarkModule { }

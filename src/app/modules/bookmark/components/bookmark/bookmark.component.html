@@ -5,22 +5,33 @@
       [title]="state.ui.toolbar.title"
       [isIconActive]="state.ui.toolbar.isIconActive"
       [username]="base.profile.name"
-      (onIconClicked)="onToolbarIconClicked($event)"
-      (onAvatarClicked)="onToolbarAvatarClicked($event)"
+      (onIconClick)="onToolbarIconClick($event)"
+      (onAvatarClick)="onToolbarAvatarClick($event)"
       (onAvatarMouseEnterLeave)="onToolbarAvatarMouseEnterLeave($event)"></app-toolbar>
   </header>
+  <div class="menu">
+    <div mdTooltip="Menu">
+      <md-icon class="material-icons menu-icon" (click)="onMenuClick()">menu</md-icon>
+    </div>
+  </div>
   <aside *ngIf="state.ui.toolbar.isIconActive" [@slideLTR]>
+    <app-search-box 
+      [bookmarks]="bookmarks" 
+      (onFilter)="onSearchBoxFilter($event)"
+      (onSelect)="onSearchBoxSelect($event)">
+    </app-search-box>
   </aside>
   <section class="account-info" *ngIf="state.ui.accountInfo.isShow" [@fade]>
     <app-account-info 
       [firstname]="base.profile.firstname"
       [lastname]="base.profile.lastname"
       [email]="base.profile.email"
-      (onSignOutClicked)="onAccountInfoSignOutClicked()">
+      (onSignOutClick)="onAccountInfoSignOutClick()">
     </app-account-info>
   </section>
   <section class="map">
     <app-map 
+      [zoom]="state.ui.map.zoom"
       [coords]="coords"
       [markers]="markers"
       [showOverlay]="state.ui.toolbar.isIconActive"

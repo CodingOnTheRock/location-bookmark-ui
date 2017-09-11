@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="search-box">
+    <form class="search-form">
+      <md-input-container>
+        <md-icon mdSuffix class="material-icons icon" [ngClass]="state.searchIcon.class">search</md-icon>
+        <input mdInput placeholder="Place" [mdAutocomplete]="auto" [formControl]="tbx_search">
+        <md-autocomplete #auto="mdAutocomplete">
+          <md-option *ngFor="let filtered of filteredBookmarks" [value]="filtered.name" (onSelectionChange)="onSelectionChange($event)">
+            <span>{{ filtered.name }}</span>
+          </md-option>
+        </md-autocomplete>
+      </md-input-container>
+    </form>
+  </div>
+</div>
