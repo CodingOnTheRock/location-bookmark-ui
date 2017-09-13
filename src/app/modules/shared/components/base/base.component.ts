@@ -31,7 +31,8 @@ export class BaseComponent {
       this.manageProfile(profile);
     })
     .catch((err) => {
-      // No Action
+      // Authentication failed (Invalid token or somethings broken)
+      this.router.navigate(['/signin']);
     });
   }
 

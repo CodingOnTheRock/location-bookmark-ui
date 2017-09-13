@@ -19,11 +19,11 @@ export class ProfileService {
       let profile;
 
       // Get profile from local storage
-      profile = this.getProfileFromLocalStorage();
-      if (profile) {
-        resolve(JSON.parse(profile));
-        return;
-      }
+      // profile = this.getProfileFromLocalStorage();
+      // if (profile) {
+      //   resolve(JSON.parse(profile));
+      //   return;
+      // }
 
       // Get profile from service
       this.getProfileFromService()
