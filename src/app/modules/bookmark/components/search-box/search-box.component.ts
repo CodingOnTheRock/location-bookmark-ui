@@ -17,7 +17,7 @@ import { Bookmark } from './../../models/bookmark.model';
 })
 export class SearchBoxComponent implements OnInit {
   @Input() bookmarks: Array<Bookmark> = [];
-  @Output() onFilter: EventEmitter<Array<Bookmark>> = new EventEmitter<Array<Bookmark>>();
+  @Output() onFilter = new EventEmitter();
   @Output() onSelect: EventEmitter<Bookmark> = new EventEmitter<Bookmark>();
 
   state = {
@@ -46,7 +46,9 @@ export class SearchBoxComponent implements OnInit {
         this.state.searchIcon.class.searchIconActive = (value.length >= 1) ? true : false;
         this.filteredBookmarks = this.searchPlaces(value);
 
-        this.onFilter.emit(this.filteredBookmarks);
+        const params = { search: value, bookmarks: this.filteredBookmarks };
+
+        this.onFilter.emit(params);
       });
   }
 

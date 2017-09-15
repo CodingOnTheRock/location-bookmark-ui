@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="item" *ngFor="let bookmark of bookmarks">
+    <app-bookmark-item 
+      [bookmark]="bookmark"
+      (onCoordsClick)="bookmarkItemCoordsClick($event)">
+    </app-bookmark-item>
+  </div>
+</div>

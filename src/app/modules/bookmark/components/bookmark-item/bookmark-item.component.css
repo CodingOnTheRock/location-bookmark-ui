@@ -1,0 +1,39 @@
+.container {
+    margin: 0;
+    padding: 5px 5px;
+
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+
+    border-bottom: 1px solid #808080;
+}
+
+.container:hover {
+    color: #ffffff;
+    background-color: #758593;
+
+    border-bottom: 1px solid #ffffff;
+}
+
+.name,
+.description,
+.location {
+    padding: 5px 5px;
+}
+
+.name {
+
+}
+
+.description {
+
+}
+
+.location {
+    font-size: 10px;
+}
+
+.coords {
+    cursor: pointer;
+}

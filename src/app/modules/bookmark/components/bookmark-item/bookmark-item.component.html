@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="name">{{ bookmark.name }}</div>
+  <div class="description">{{ bookmark.description }}</div>
+  <div class="location">
+    <span mdTooltip="Go to location" [mdTooltipPosition]="'after'">
+      <img class="coords" src="/assets/images/location.png" (click)="coordsClick()">
+    </span>
+  </div>
+</div>

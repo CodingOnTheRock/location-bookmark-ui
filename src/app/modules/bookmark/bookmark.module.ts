@@ -10,6 +10,8 @@ import { BookmarkService } from './services/bookmark.service';
 
 // Components
 import { BookmarkComponent } from './components/bookmark/bookmark.component';
+import { BookmarkListComponent } from './components/bookmark-list/bookmark-list.component';
+import { BookmarkItemComponent } from './components/bookmark-item/bookmark-item.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 
 @NgModule({
@@ -22,6 +24,8 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
   ],
   declarations: [
     BookmarkComponent,
+    BookmarkListComponent,
+    BookmarkItemComponent,
     SearchBoxComponent
   ]
 })

@@ -49,6 +49,12 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
         zoom: 12,
         markers: new Array<Marker>(),
         infoWindow: new InfoWindow(new Coords(0, 0), false)
+      },
+      searchBox: {
+        bookmarks: new Array<Bookmark>()
+      },
+      bookmarkList: {
+        bookmarks: new Array<Bookmark>()
       }
     },
     data: {
@@ -97,9 +103,18 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     return promise;
   }
 
+  createSearchBoxTask(bookmarks: Array<Bookmark>) {
+    const promise = new Promise((resolve, reject) => {
+      this.state.ui.searchBox.bookmarks = bookmarks;
+      resolve();
+    });
+
+    return promise;
+  }
+
   createBookmarkListTask(bookmarks: Array<Bookmark>) {
     const promise = new Promise((resolve, reject) => {
-      // Create bookmark list
+      this.state.ui.bookmarkList.bookmarks = bookmarks;
       resolve();
     });
 
@@ -153,9 +168,10 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
 
   renderTask() {
     const createMakersTask = this.createMarkersTask(this.state.data.bookmarks);
+    const createSearchBoxTask = this.createSearchBoxTask(this.state.data.bookmarks);
     const createBookmarkListTask = this.createBookmarkListTask(this.state.data.bookmarks);
 
-    const promises = Promise.all([createMakersTask, createBookmarkListTask]);
+    const promises = Promise.all([createMakersTask, createSearchBoxTask, createBookmarkListTask]);
 
     return promises;
   }
@@ -196,8 +212,15 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     // No Action
   }
 
-  onSearchBoxFilter(bookmarks: Array<Bookmark[]>) {
-    // No Action
+  onSearchBoxFilter(event) {
+    const search = event.search;
+    const bookmarks = event.bookmarks;
+
+    if (search.length === 0) {
+      this.state.ui.bookmarkList.bookmarks = this.state.data.bookmarks;
+    } else {
+      this.state.ui.bookmarkList.bookmarks = bookmarks;
+    }
   }
 
   onSearchBoxSelect(bookmark: Bookmark) {
@@ -220,6 +243,10 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     this.closeSnackBar();
   }
 
+  onMapCenterChange(coords: Coords) {
+    this.setMapCoordinates(coords);
+  }
+
   onMarkerUpdate(marker: Marker) {
     const snackbar = this.createSnackBar('Do you want to update?', 'Confirm');
     snackbar.onAction().subscribe(() => {
@@ -232,6 +259,10 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     snackbar.onAction().subscribe(() => {
       this.deleteMarker(marker);
     });
+  }
+
+  onBookmarkListCoordsClick(coords: Coords) {
+    this.setMapCoordinates(coords);
   }
 
   createSnackBar(message: string, action: string) {

@@ -6,14 +6,14 @@
       <div class="right">
           <div class="name">{{ firstname }} {{ lastname }}</div>
           <div class="email">{{ email }}</div>
-          <div class="account" mdTooltip="My Account">
+          <span class="account" mdTooltip="My Account">
             <div class="material-icons button account">verified_user</div>
-          </div>
+          </span>
       </div>
   </div>
   <div class="footer">
-      <div mdTooltip="Logout">
+      <span mdTooltip="Logout">
         <div class="material-icons button logout" (click)="signOutClick()">power_settings_new</div>
-      </div>
+      </span>
   </div>
 </div>

@@ -16,10 +16,14 @@
   </div>
   <aside *ngIf="state.ui.toolbar.isIconActive" [@slideLTR]>
     <app-search-box 
-      [bookmarks]="this.state.data.bookmarks" 
+      [bookmarks]="this.state.ui.searchBox.bookmarks"
       (onFilter)="onSearchBoxFilter($event)"
       (onSelect)="onSearchBoxSelect($event)">
     </app-search-box>
+    <app-bookmark-list 
+      [bookmarks]="this.state.ui.bookmarkList.bookmarks"
+      (onBookmarkItemCoordsClick)="onBookmarkListCoordsClick($event)">
+    </app-bookmark-list>
   </aside>
   <section class="account-info" *ngIf="state.ui.accountInfo.isShow" [@fade]>
     <app-account-info 
@@ -39,6 +43,7 @@
       (onFocus)="onMapFocus()"
       (onLostFocus)="onMapLostFocus()"
       (onRightClick)="onMapRightClick($event)"
+      (onCenterChange)="onMapCenterChange($event)"
       (onMarkerUpdate)="onMarkerUpdate($event)"
       (onMarkerDelete)="onMarkerDelete($event)"></app-map>
   </section>

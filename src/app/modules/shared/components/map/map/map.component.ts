@@ -21,6 +21,7 @@ export class MapComponent implements OnInit, OnChanges {
   @Output() onFocus = new EventEmitter();
   @Output() onLostFocus = new EventEmitter();
   @Output() onRightClick: EventEmitter<Coords> = new EventEmitter<Coords>();
+  @Output() onCenterChange: EventEmitter<Coords> = new EventEmitter<Coords>();
 
   @Output() onMarkerUpdate: EventEmitter<Marker> = new EventEmitter<Marker>();
   @Output() onMarkerDelete: EventEmitter<Marker> = new EventEmitter<Marker>();
@@ -52,8 +53,16 @@ export class MapComponent implements OnInit, OnChanges {
     this.rightClick(event);
   }
 
-  onBoundsChange(event) {
+  onMapBoundsChange(event) {
     // No Action
+  }
+
+  onMapCenterChange(event) {
+    const lat = event.lat;
+    const lng = event.lng;
+    const coords = new Coords(lat, lng);
+
+    this.onCenterChange.emit(coords);
   }
 
   onIdle(event) {

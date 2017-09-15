@@ -9,7 +9,8 @@
     (mapClick)="onMapClick($event)"
     (mapDblClick)="onMapDblClick($event)"
     (mapRightClick)="onMapRightClick($event)"
-    (boundsChange)="onBoundsChange($event)"
+    (boundsChange)="onMapBoundsChange($event)"
+    (centerChange)="onMapCenterChange($event)"
     (idle)="onIdle($event)">
     <!-- Markers -->
     <div *ngFor="let marker of markers">
