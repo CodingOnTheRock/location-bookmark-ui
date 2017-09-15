@@ -28,6 +28,8 @@ import { ProgressBarComponent } from './components/progressbar/progressbar.compo
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { AccountInfoComponent } from './components/account-info/account-info.component';
 import { MapComponent } from './components/map/map/map.component';
+import { LocationInfoComponent } from './components/map/location-info/location-info.component';
+import { MarkerComponent } from './components/map/marker/marker.component';
 
 // Environment
 import { environment } from './../../../environments/environment';
@@ -56,7 +58,9 @@ import { environment } from './../../../environments/environment';
     ProgressBarComponent,
     ToolbarComponent,
     AccountInfoComponent,
-    MapComponent
+    MapComponent,
+    LocationInfoComponent,
+    MarkerComponent
   ],
   providers: [
     HttpClient,
@@ -87,7 +91,9 @@ import { environment } from './../../../environments/environment';
     ProgressBarComponent,
     ToolbarComponent,
     AccountInfoComponent,
-    MapComponent
+    MapComponent,
+    LocationInfoComponent,
+    MarkerComponent
   ]
 })
 export class SharedModule { }

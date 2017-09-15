@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="view" *ngIf="mode === 'view'">
+    <div class="title">{{ locationInfo.name }}</div>
+    <div class="description">{{ locationInfo.description }}</div>
+    <div class="menu">
+      <span mdTooltip="Edit">
+        <span class="material-icons icon" (click)="editClick()">mode_edit</span>
+      </span>
+      <span mdTooltip="Delete">
+          <span class="material-icons icon" (click)="deleteClick()">delete</span>
+        </span>
+    </div>
+  </div>
+  <div class="edit" *ngIf="mode === 'edit'">
+    <div class="title">{{ locationInfo.name }}</div>
+    <div class="description">
+      <form novalidate [formGroup]="form_location">
+        <md-input-container>
+          <textarea mdInput #description maxlength="255" rows="5" cols="100" placeholder="Description" [formControl]="tbx_description"></textarea>
+          <md-hint align="end">{{ description.value.length }} / 255</md-hint>
+          <md-error *ngIf="tbx_description.hasError('required')">
+            Description is <strong>required</strong>
+          </md-error>
+        </md-input-container>
+      </form>
+    </div>
+    <div class="menu">
+      <span mdTooltip="View">
+        <span class="material-icons icon" (click)="viewClick()">info_outline</span>
+      </span>
+      <span mdTooltip="Save" *ngIf="state.ui.description.visible">
+        <span class="material-icons icon" (click)="saveClick()">save</span>
+      </span>
+    </div>
+  </div>
+</div>

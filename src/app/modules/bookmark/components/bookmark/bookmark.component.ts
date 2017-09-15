@@ -7,17 +7,19 @@ import { slideLTR, } from './../../../../core/animations/slide';
 import { fade } from './../../../../core/animations/fade';
 
 // Services
-import { HttpService } from './../../../shared/services/http/http.service';
 import { ProfileService } from './../../../shared/services/profile/profile.service';
 import { BookmarkService } from './../../services/bookmark.service';
 
 // Models
 import { Coords } from './../../../shared/models/map/coords.model';
 import { Marker } from './../../../shared/models/map/marker.model';
+import { LocationInfo } from './../../../shared/models/map/locationInfo.model';
+import { InfoWindow } from './../../../shared/models/map/infowindow.model';
 import { Bookmark } from './../../models/bookmark.model';
 
 // Components
 import { BaseComponent } from './../../../shared/components/base/base.component';
+import { MdSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-bookmark',
@@ -43,23 +45,24 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
         isShow: false
       },
       map: {
-        coordinates: {
-          lat: 0,
-          lng: 0
-        },
-        zoom: 12
+        coords: new Coords(0, 0),
+        zoom: 12,
+        markers: new Array<Marker>(),
+        infoWindow: new InfoWindow(new Coords(0, 0), false)
       }
+    },
+    data: {
+      bookmarks: new Array<Bookmark>()
     }
   };
 
-  bookmarks: Array<Bookmark> = [];
-  coords: Coords = new Coords(0, 0);
-  markers: Array<Marker> = [];
+  isShowRightClick: Boolean = false;
 
   constructor(
     public router: Router,
     public profileService: ProfileService,
-    private bookmarkService: BookmarkService
+    private bookmarkService: BookmarkService,
+    private snackBar: MdSnackBar
   ) {
     super(
       router,
@@ -72,33 +75,42 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
   }
 
   initial() {
-    const tasks = this.loadBookmarks();
+    const tasks = this.refreshTask();
     tasks
-      .then((bookmarks: Array<Bookmark>) => {
-        if (bookmarks) {
-          // Convert to array of Bookmark
-          this.bookmarks = this.bookmarkService.convertToArray(bookmarks);
-          // Create markers
-          return this.createMakers(bookmarks);
-        }
-      })
-      .then((markers: Array<Marker>) => {
-        if (markers) {
-          // Set location
-          this.markers = markers;
-          return this.setLocation(markers);
-        }
+      .then(() => {
+        return this.getLocationTask();
       })
       .then((coords: Coords) => {
-        if (coords) {
-          // Set Coordinates
-          this.coords = coords;
-        }
+        // Set location
+        this.setMapCoordinates(coords);
       })
       .catch((err) => { console.log(err); });
   }
 
-  loadBookmarks() {
+  createMarkersTask(bookmarks: Array<Bookmark>) {
+    const promise = new Promise((resolve, reject) => {
+      // Create markers
+      const markers = this.bookmarkService.buildMarkers(bookmarks);
+      resolve(markers);
+    });
+
+    return promise;
+  }
+
+  createBookmarkListTask(bookmarks: Array<Bookmark>) {
+    const promise = new Promise((resolve, reject) => {
+      // Create bookmark list
+      resolve();
+    });
+
+    return promise;
+  }
+
+  setMapCoordinates(coords: Coords) {
+    this.state.ui.map.coords = coords;
+  }
+
+  loadTask() {
     const promise = new Promise((resolve, reject) => {
       this.bookmarkService.getBookmarks()
         .subscribe(
@@ -114,83 +126,70 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     return promise;
   }
 
-  createMakers(bookmarks: Array<Bookmark>) {
+  refreshTask() {
     const promise = new Promise((resolve, reject) => {
-      // Create markers
-      const markers: Array<Marker> = [];
-      for (let i = 0; i < bookmarks.length; i++) {
-        const marker = this.createMarkerFromBookmark(bookmarks[i]);
-        markers.push(marker);
-      }
-
-      resolve(markers);
-    });
-
-    return promise;
-  }
-
-  createMarkerFromBookmark(bookmark: Bookmark) {
-    const marker = new Marker(
-      '',
-      '',
-      bookmark.name,
-      bookmark.name,
-      bookmark.description,
-      new Coords(bookmark.lat, bookmark.lng)
-    );
-
-    return marker;
-  }
-
-  setLocation(markers: Array<Marker>) {
-    const promise = new Promise((resolve, reject) => {
-      if (navigator.geolocation) {
-        // Set location from current location
-        navigator.geolocation.getCurrentPosition(
-          (location) => {
-            const lat = location.coords.latitude;
-            const lng = location.coords.longitude;
-
-            const coords = new Coords(lat, lng);
-            resolve(coords);
-          },
-          (err) => {
-            // Set location from first of marker coordinates
-            const coords = this.setLocationFromMarkers(this.markers);
-            resolve(coords);
+      const loadTask = this.loadTask();
+      loadTask
+        .then((bookmarks: Array<Bookmark>) => {
+          if (bookmarks) {
+            // Convert to array of Bookmark
+            this.state.data.bookmarks = this.bookmarkService.convertToArray(bookmarks);
           }
-        );
-      } else {
-        // Set location from first of marker coordinates
-        const coords = this.setLocationFromMarkers(this.markers);
-        resolve(coords);
-      }
+
+          return this.renderTask();
+        })
+        .then((results) => {
+          this.state.ui.map.markers = <Array<Marker>>results[0];
+
+          resolve();
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
 
     return promise;
   }
 
-  setLocationFromMarkers(markers: Array<Marker>) {
-    return (markers.length > 0) ? markers[0].coords : null;
+  renderTask() {
+    const createMakersTask = this.createMarkersTask(this.state.data.bookmarks);
+    const createBookmarkListTask = this.createBookmarkListTask(this.state.data.bookmarks);
+
+    const promises = Promise.all([createMakersTask, createBookmarkListTask]);
+
+    return promises;
   }
 
-  setLocationFromMarker(marker: Marker) {
-    if (marker && marker.coords) {
-      this.coords = marker.coords;
-    }
+  getLocationTask() {
+    const promise = new Promise((resolve, reject) => {
+      this.bookmarkService.getCurrentLocation()
+        .then((coords: Coords) => {
+          resolve(coords);
+        })
+        .catch((err) => {
+          const markers = this.state.ui.map.markers;
+          const firstMarkerCoords = (markers.length > 0) ? markers[0].coords : undefined;
+
+          resolve(firstMarkerCoords);
+        });
+    });
+
+    return promise;
   }
 
   onMenuClick() {
     this.showMenu(true);
     this.showAccountInfo(false);
+    this.closeSnackBar();
   }
 
-  onToolbarIconClick(isIconActive) {
+  onToolbarIconClick(isIconActive: Boolean) {
     // No Action
   }
 
   onToolbarAvatarClick() {
     this.showAccountInfo(!this.state.ui.accountInfo.isShow);
+    this.closeSnackBar();
   }
 
   onToolbarAvatarMouseEnterLeave(isShowUserInfo) {
@@ -202,13 +201,105 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
   }
 
   onSearchBoxSelect(bookmark: Bookmark) {
-    const marker = this.createMarkerFromBookmark(bookmark);
-    this.setLocationFromMarker(marker);
+    const marker = this.bookmarkService.buildMarker(bookmark);
+    this.setMapCoordinates(marker.coords);
   }
 
   onMapFocus() {
     this.showMenu(false);
     this.showAccountInfo(false);
+    this.closeSnackBar();
+  }
+
+  onMapLostFocus() {
+    this.closeSnackBar();
+  }
+
+  onMapRightClick(coords: Coords) {
+    this.showInfoWindow(coords);
+    this.closeSnackBar();
+  }
+
+  onMarkerUpdate(marker: Marker) {
+    const snackbar = this.createSnackBar('Do you want to update?', 'Confirm');
+    snackbar.onAction().subscribe(() => {
+      this.updateMarker(marker);
+    });
+  }
+
+  onMarkerDelete(marker: Marker) {
+    const snackbar = this.createSnackBar('Do you want to delete?', 'Confirm');
+    snackbar.onAction().subscribe(() => {
+      this.deleteMarker(marker);
+    });
+  }
+
+  createSnackBar(message: string, action: string) {
+    const snackbar = this.snackBar.open(message, action, {
+      duration: 5000
+    });
+
+    return snackbar;
+  }
+
+  updateMarker(marker: Marker) {
+    const original = this.getBookmark(marker.locationInfo.id);
+    const update = Object.assign({}, original);
+    update.name = marker.locationInfo.name;
+    update.description = marker.locationInfo.description;
+
+    this.bookmarkService.updateBookmark(update.id, update)
+      .subscribe(
+        (updated) => {
+          // Refresh
+          this.refreshTask()
+            .then(() => {})
+            .catch((err) => {});
+        },
+        (err) => {
+          console.log('err', err);
+        },
+        () => {}
+      );
+  }
+
+  deleteMarker(marker: Marker) {
+    const original = this.getBookmark(marker.locationInfo.id);
+    this.bookmarkService.deleteBookmark(original.id)
+      .subscribe(
+        (deleted) => {
+          // Refresh
+          this.refreshTask()
+          .then(() => {})
+          .catch((err) => {});
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {}
+      );
+  }
+
+  getBookmarkIndex(id: String) {
+    const index = this.state.data.bookmarks.findIndex((item) => {
+      return item.id === id;
+    });
+
+    return index;
+  }
+
+  getBookmark(id: String) {
+    const index = this.getBookmarkIndex(id);
+
+    return (index >= 0) ? this.state.data.bookmarks[index] : null;
+  }
+
+  showInfoWindow(coords: Coords) {
+    this.state.ui.map.infoWindow.coords = coords;
+    this.state.ui.map.infoWindow.isOpen = false;
+    setTimeout(() => {
+      this.state.ui.map.infoWindow.isOpen = true;
+    }, 0);
   }
 
   showMenu(isShowMenu) {
@@ -217,6 +308,10 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
 
   showAccountInfo(isShowAccountInfo) {
     this.state.ui.accountInfo.isShow = isShowAccountInfo;
+  }
+
+  closeSnackBar() {
+    this.snackBar.dismiss();
   }
 
   onAccountInfoSignOutClick() {

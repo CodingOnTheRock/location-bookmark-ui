@@ -6,7 +6,7 @@
       [isIconActive]="state.ui.toolbar.isIconActive"
       [username]="base.profile.name"
       (onIconClick)="onToolbarIconClick($event)"
-      (onAvatarClick)="onToolbarAvatarClick($event)"
+      (onAvatarClick)="onToolbarAvatarClick()"
       (onAvatarMouseEnterLeave)="onToolbarAvatarMouseEnterLeave($event)"></app-toolbar>
   </header>
   <section class="account-info" *ngIf="state.ui.accountInfo.isShow" [@fade]>

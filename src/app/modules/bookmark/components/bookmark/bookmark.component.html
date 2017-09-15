@@ -6,7 +6,7 @@
       [isIconActive]="state.ui.toolbar.isIconActive"
       [username]="base.profile.name"
       (onIconClick)="onToolbarIconClick($event)"
-      (onAvatarClick)="onToolbarAvatarClick($event)"
+      (onAvatarClick)="onToolbarAvatarClick()"
       (onAvatarMouseEnterLeave)="onToolbarAvatarMouseEnterLeave($event)"></app-toolbar>
   </header>
   <div class="menu">
@@ -16,7 +16,7 @@
   </div>
   <aside *ngIf="state.ui.toolbar.isIconActive" [@slideLTR]>
     <app-search-box 
-      [bookmarks]="bookmarks" 
+      [bookmarks]="this.state.data.bookmarks" 
       (onFilter)="onSearchBoxFilter($event)"
       (onSelect)="onSearchBoxSelect($event)">
     </app-search-box>
@@ -32,9 +32,14 @@
   <section class="map">
     <app-map 
       [zoom]="state.ui.map.zoom"
-      [coords]="coords"
-      [markers]="markers"
+      [coords]="state.ui.map.coords"
+      [markers]="state.ui.map.markers"
       [showOverlay]="state.ui.toolbar.isIconActive"
-      (onFocus)="onMapFocus($event)"></app-map>
+      [infoWindow]="state.ui.map.infoWindow"
+      (onFocus)="onMapFocus()"
+      (onLostFocus)="onMapLostFocus()"
+      (onRightClick)="onMapRightClick($event)"
+      (onMarkerUpdate)="onMarkerUpdate($event)"
+      (onMarkerDelete)="onMarkerDelete($event)"></app-map>
   </section>
 </div>

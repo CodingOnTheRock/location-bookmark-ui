@@ -1,0 +1,17 @@
+<agm-marker
+  [iconUrl]="marker.icon"
+  [label]="marker.label"
+  [title]="marker.title"
+  [latitude]="marker.coords.lat" 
+  [longitude]="marker.coords.lng">
+  <agm-info-window
+    (infoWindowClose)="onInfoWindowClose()">
+    <app-location-info
+      [mode]="mode"
+      [locationInfo]="marker.locationInfo"
+      (onModeChange)="onLocationInfoModeChanged($event)"
+      (onSave)="onLocationInfoSaved($event)"
+      (onDelete)="onLocationInfoDeleted($event)">
+    </app-location-info>
+  </agm-info-window>
+</agm-marker>
