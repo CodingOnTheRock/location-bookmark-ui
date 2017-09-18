@@ -36,6 +36,7 @@
     font-size: 48px;
 }
 
+.icon,
 .avatar {
     cursor: pointer;
 }

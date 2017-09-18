@@ -72,4 +72,15 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   onAccountInfoSignOutClick() {
     super.signout();
   }
+
+  iconClick(icon: String) {
+    switch (icon) {
+      case 'bookmark' :
+        this.router.navigate(['/bookmark']);
+        break;
+      case 'my-account' :
+        console.log('my-account');
+        break;
+    }
+  }
 }

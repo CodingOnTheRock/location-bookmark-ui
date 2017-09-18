@@ -1,0 +1,55 @@
+section.panel {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    height: inherit;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-container {
+    width: 60%;
+
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+
+    flex-wrap: wrap;
+}
+
+.icon-item {
+    margin: 20px 30px;
+    width: 120px;
+
+    cursor: pointer;
+}
+
+.icon-wrapper {
+    width: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.icon {
+    font-size: 84px;
+    color: #888888;
+}
+
+.icon:hover {
+    color: #3f51b5;
+}
+
+.icon-text {
+    font-family: 'Baloo Bhaijaan', cursive;
+    font-size: 1.5em;
+    color: #000000;
+
+    text-align: center;
+}

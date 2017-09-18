@@ -208,7 +208,7 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
   }
 
   onToolbarIconClick(isIconActive: Boolean) {
-    // No Action
+    this.router.navigate(['/dashboard']);
   }
 
   onToolbarAvatarClick() {
