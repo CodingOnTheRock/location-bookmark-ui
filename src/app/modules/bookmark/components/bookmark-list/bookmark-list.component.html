@@ -5,4 +5,7 @@
       (onCoordsClick)="bookmarkItemCoordsClick($event)">
     </app-bookmark-item>
   </div>
+  <div class="empty" *ngIf="bookmarks.length === 0">
+    No Bookmark
+  </div>
 </div>

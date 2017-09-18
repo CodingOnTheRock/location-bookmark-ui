@@ -39,11 +39,12 @@
       [coords]="state.ui.map.coords"
       [markers]="state.ui.map.markers"
       [showOverlay]="state.ui.toolbar.isIconActive"
-      [infoWindow]="state.ui.map.infoWindow"
       (onFocus)="onMapFocus()"
       (onLostFocus)="onMapLostFocus()"
       (onRightClick)="onMapRightClick($event)"
       (onCenterChange)="onMapCenterChange($event)"
+      (onNewMarkerInfoWindowClose)="onNewMarkerInfoWindowClose($event)"
+      (onMarkerSave)="onMarkerSave($event)"
       (onMarkerUpdate)="onMarkerUpdate($event)"
       (onMarkerDelete)="onMarkerDelete($event)"></app-map>
   </section>

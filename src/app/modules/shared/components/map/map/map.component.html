@@ -16,16 +16,11 @@
     <div *ngFor="let marker of markers">
       <app-marker
         [marker]="marker"
+        (onNewMarkerInfoWindowClose)="onNewMarkerInfoWindowClosed($event)"
+        (onLocationInfoSave)="onLocationInfoSaved($event)"
         (onLocationInfoUpdate)="onLocationInfoUpdated($event)"
         (onLocationInfoDelete)="onLocationInfoDeleted($event)">
       </app-marker>
     </div>
-    <!-- InfoWindow -->
-    <agm-info-window 
-      [latitude]="infoWindow.coords.lat"
-      [longitude]="infoWindow.coords.lng"
-      [isOpen]="infoWindow.isOpen">
-      Test
-    </agm-info-window>
   </agm-map>
 </div>

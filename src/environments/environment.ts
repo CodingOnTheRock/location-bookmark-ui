@@ -13,7 +13,11 @@ export const environment = {
   },
   apis: {
     google_map: {
-      key: 'AIzaSyD6inFvJXlyP2HYPouCdT8kTpdk46HFw3E'
+      key: 'AIzaSyD6inFvJXlyP2HYPouCdT8kTpdk46HFw3E',
+      default_coordinates : {
+        lat: 13.7563,
+        lng: 100.5018
+      }
     }
   }
 };

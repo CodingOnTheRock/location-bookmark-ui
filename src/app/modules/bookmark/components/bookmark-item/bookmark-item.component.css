@@ -22,12 +22,13 @@
     padding: 5px 5px;
 }
 
-.name {
-
+.name,
+.description {
+    font-family: 'Kanit', sans-serif;
 }
 
-.description {
-
+.name {
+    font-size: 1.2em;
 }
 
 .location {

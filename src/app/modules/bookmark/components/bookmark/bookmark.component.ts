@@ -47,8 +47,7 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
       map: {
         coords: new Coords(0, 0),
         zoom: 12,
-        markers: new Array<Marker>(),
-        infoWindow: new InfoWindow(new Coords(0, 0), false)
+        markers: new Array<Marker>()
       },
       searchBox: {
         bookmarks: new Array<Bookmark>()
@@ -186,7 +185,16 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
           const markers = this.state.ui.map.markers;
           const firstMarkerCoords = (markers.length > 0) ? markers[0].coords : undefined;
 
-          resolve(firstMarkerCoords);
+          if (firstMarkerCoords) {
+            resolve(firstMarkerCoords);
+            return;
+          }
+
+          throw err;
+        })
+        .catch((err) => {
+          const defaultCoordinates = this.bookmarkService.getDefaultLocation();
+          resolve(defaultCoordinates);
         });
     });
 
@@ -239,12 +247,30 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
   }
 
   onMapRightClick(coords: Coords) {
-    this.showInfoWindow(coords);
+    // Remove previous new marker
+    this.removeNewMarker();
+    // Create new marker
+    const newMarker = this.createNewMarker(coords);
+    // Add new marker
+    this.state.ui.map.markers.push(newMarker);
+    // Close snackbar
     this.closeSnackBar();
   }
 
   onMapCenterChange(coords: Coords) {
     this.setMapCoordinates(coords);
+  }
+
+  onNewMarkerInfoWindowClose(marker: Marker) {
+    // Remove previous new marker
+    this.removeNewMarker();
+  }
+
+  onMarkerSave(marker: Marker) {
+    const snackbar = this.createSnackBar('Do you want to create?', 'Confirm');
+    snackbar.onAction().subscribe(() => {
+      this.createMarker(marker);
+    });
   }
 
   onMarkerUpdate(marker: Marker) {
@@ -273,15 +299,37 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     return snackbar;
   }
 
-  updateMarker(marker: Marker) {
-    const original = this.getBookmark(marker.locationInfo.id);
-    const update = Object.assign({}, original);
-    update.name = marker.locationInfo.name;
-    update.description = marker.locationInfo.description;
+  createMarker(marker: Marker) {
+    const name = marker.locationInfo.name;
+    const description = marker.locationInfo.description;
+    const lat = marker.coords.lat;
+    const lng = marker.coords.lng;
 
-    this.bookmarkService.updateBookmark(update.id, update)
+    const newBookmark = new Bookmark('', name, description, lat, lng, new Date(), new Date());
+    this.bookmarkService.createBookmark(newBookmark)
+    .subscribe(
+      (createdBookmark) => {
+        // Refresh
+        this.refreshTask()
+          .then(() => {})
+          .catch((err) => {});
+      },
+      (err) => {
+        console.log('err', err);
+      },
+      () => {}
+    );
+  }
+
+  updateMarker(marker: Marker) {
+    const originalBookmark = this.getBookmark(marker.locationInfo.id);
+    const updateBookmark = Object.assign({}, originalBookmark);
+    updateBookmark.name = marker.locationInfo.name;
+    updateBookmark.description = marker.locationInfo.description;
+
+    this.bookmarkService.updateBookmark(updateBookmark.id, updateBookmark)
       .subscribe(
-        (updated) => {
+        (updatedBookmark) => {
           // Refresh
           this.refreshTask()
             .then(() => {})
@@ -325,12 +373,30 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     return (index >= 0) ? this.state.data.bookmarks[index] : null;
   }
 
-  showInfoWindow(coords: Coords) {
-    this.state.ui.map.infoWindow.coords = coords;
-    this.state.ui.map.infoWindow.isOpen = false;
-    setTimeout(() => {
-      this.state.ui.map.infoWindow.isOpen = true;
-    }, 0);
+  createNewMarker(coords: Coords) {
+    const newBookmark = new Bookmark('', '', '', coords.lat, coords.lng, new Date(), new Date());
+    const marker = this.bookmarkService.createMarker(newBookmark);
+
+    return marker;
+  }
+
+  getNewMarkerIndex() {
+    const index = this.state.ui.map.markers.findIndex((item) => {
+      return item.mode === 'add';
+    });
+
+    return index;
+  }
+
+  removeNewMarker() {
+    const newMarkerIndex = this.getNewMarkerIndex();
+    if (newMarkerIndex >= 0) {
+      this.removeMarker(newMarkerIndex);
+    }
+  }
+
+  removeMarker(index: number) {
+    this.state.ui.map.markers.splice(index, 1);
   }
 
   showMenu(isShowMenu) {

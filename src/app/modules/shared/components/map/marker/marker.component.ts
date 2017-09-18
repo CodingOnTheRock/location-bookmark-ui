@@ -12,10 +12,10 @@ import { LocationInfo } from './../../../models/map/locationInfo.model';
 })
 export class MarkerComponent implements OnInit {
   @Input() marker: Marker;
+  @Output() onNewMarkerInfoWindowClose = new EventEmitter();
+  @Output() onLocationInfoSave: EventEmitter<LocationInfo> = new EventEmitter<LocationInfo>();
   @Output() onLocationInfoUpdate: EventEmitter<LocationInfo> = new EventEmitter<LocationInfo>();
   @Output() onLocationInfoDelete: EventEmitter<LocationInfo> = new EventEmitter<LocationInfo>();
-
-  mode: String = 'view';
 
   constructor() { }
 
@@ -23,11 +23,20 @@ export class MarkerComponent implements OnInit {
   }
 
   changeInfoWindowMode(mode) {
-    this.mode = mode;
+    this.marker.mode = mode;
   }
 
   onInfoWindowClose() {
-    this.changeInfoWindowMode('view');
+    if (this.marker.mode === 'add') {
+      const locationInfo = this.marker.locationInfo;
+      this.onNewMarkerInfoWindowClose.emit(locationInfo);
+      return;
+    }
+
+    if (this.marker.mode === 'edit') {
+      this.changeInfoWindowMode('view');
+      return;
+    }
   }
 
   onLocationInfoModeChanged(mode) {
@@ -35,6 +44,10 @@ export class MarkerComponent implements OnInit {
   }
 
   onLocationInfoSaved(locationInfo: LocationInfo) {
+    this.onLocationInfoSave.emit(locationInfo);
+  }
+
+  onLocationInfoUpdated(locationInfo: LocationInfo) {
     this.onLocationInfoUpdate.emit(locationInfo);
   }
 

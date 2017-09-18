@@ -5,7 +5,6 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { Coords } from './../../../models/map/coords.model';
 import { Marker } from './../../../models/map/marker.model';
 import { LocationInfo } from './../../../models/map/locationInfo.model';
-import { InfoWindow } from './../../../models/map/infowindow.model';
 
 @Component({
   selector: 'app-map',
@@ -16,13 +15,14 @@ export class MapComponent implements OnInit, OnChanges {
   @Input() coords: Coords = new Coords(0, 0);
   @Input() zoom: Number = 14;
   @Input() markers: Array<Marker> = [];
-  @Input() infoWindow: InfoWindow;
   @Input() showOverlay: Boolean = false;
   @Output() onFocus = new EventEmitter();
   @Output() onLostFocus = new EventEmitter();
   @Output() onRightClick: EventEmitter<Coords> = new EventEmitter<Coords>();
   @Output() onCenterChange: EventEmitter<Coords> = new EventEmitter<Coords>();
 
+  @Output() onNewMarkerInfoWindowClose: EventEmitter<Marker> = new EventEmitter<Marker>();
+  @Output() onMarkerSave: EventEmitter<Marker> = new EventEmitter<Marker>();
   @Output() onMarkerUpdate: EventEmitter<Marker> = new EventEmitter<Marker>();
   @Output() onMarkerDelete: EventEmitter<Marker> = new EventEmitter<Marker>();
 
@@ -67,6 +67,21 @@ export class MapComponent implements OnInit, OnChanges {
 
   onIdle(event) {
     // No Action
+  }
+
+  onNewMarkerInfoWindowClosed(locationInfo: LocationInfo) {
+    const marker = this.findMarker(locationInfo);
+    const newMarker = Object.assign({}, marker);
+
+    this.onNewMarkerInfoWindowClose.emit(newMarker);
+  }
+
+  onLocationInfoSaved(locationInfo: LocationInfo) {
+    const marker = this.findMarker(locationInfo);
+    const newMarker = Object.assign({}, marker);
+    newMarker.locationInfo = locationInfo;
+
+    this.onMarkerSave.emit(newMarker);
   }
 
   onLocationInfoUpdated(locationInfo: LocationInfo) {

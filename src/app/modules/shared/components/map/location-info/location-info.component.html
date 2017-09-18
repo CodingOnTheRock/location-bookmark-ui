@@ -11,25 +11,52 @@
         </span>
     </div>
   </div>
+  <div class="add" *ngIf="mode === 'add'">
+    <form novalidate [formGroup]="form_add_location">
+      <div class="title">
+        <md-input-container>
+          <input mdInput #name maxlength="50" placeholder="Name" [formControl]="tbx_add_name">
+          <md-hint align="end">{{ name.value.length }} / 50</md-hint>
+          <md-error *ngIf="tbx_add_name.hasError('required')">
+            Name is <strong>required</strong>
+          </md-error>
+        </md-input-container>
+      </div>
+      <div class="description">
+        <md-input-container>
+          <textarea mdInput #description maxlength="255" rows="5" cols="100" placeholder="Description" [formControl]="tbx_add_description"></textarea>
+          <md-hint align="end">{{ description.value.length }} / 255</md-hint>
+          <md-error *ngIf="tbx_add_description.hasError('required')">
+            Description is <strong>required</strong>
+          </md-error>
+        </md-input-container>
+      </div>
+    </form>
+    <div class="menu">
+      <span mdTooltip="Save" *ngIf="state.ui.save.visible">
+        <span class="material-icons icon" (click)="saveClick()">save</span>
+      </span>
+    </div>
+  </div>
   <div class="edit" *ngIf="mode === 'edit'">
     <div class="title">{{ locationInfo.name }}</div>
     <div class="description">
-      <form novalidate [formGroup]="form_location">
+      <form novalidate [formGroup]="form_edit_location">
         <md-input-container>
-          <textarea mdInput #description maxlength="255" rows="5" cols="100" placeholder="Description" [formControl]="tbx_description"></textarea>
+          <textarea mdInput #description maxlength="255" rows="5" cols="100" placeholder="Description" [formControl]="tbx_edit_description"></textarea>
           <md-hint align="end">{{ description.value.length }} / 255</md-hint>
-          <md-error *ngIf="tbx_description.hasError('required')">
+          <md-error *ngIf="tbx_edit_description.hasError('required')">
             Description is <strong>required</strong>
           </md-error>
         </md-input-container>
       </form>
     </div>
     <div class="menu">
-      <span mdTooltip="View">
+      <span mdTooltip="View" *ngIf="state.ui.view.visible">
         <span class="material-icons icon" (click)="viewClick()">info_outline</span>
       </span>
-      <span mdTooltip="Save" *ngIf="state.ui.description.visible">
-        <span class="material-icons icon" (click)="saveClick()">save</span>
+      <span mdTooltip="Update" *ngIf="state.ui.update.visible">
+        <span class="material-icons icon" (click)="updateClick()">save</span>
       </span>
     </div>
   </div>

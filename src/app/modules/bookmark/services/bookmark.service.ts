@@ -13,7 +13,11 @@ import 'rxjs/add/operator/map';
 import { Coords } from './../../shared/models/map/coords.model';
 import { Marker } from './../../shared/models/map/marker.model';
 import { LocationInfo } from './../../shared/models/map/locationInfo.model';
+import { InfoWindow } from './../../shared/models/map/infowindow.model';
 import { Bookmark } from './../models/bookmark.model';
+
+// Environment
+import { environment } from './../../../../environments/environment';
 
 @Injectable()
 export class BookmarkService {
@@ -27,8 +31,13 @@ export class BookmarkService {
       .map((response: Response) => <Array<Bookmark>>response.json());
   }
 
-  updateBookmark(id: String, update: Bookmark) {
-    return this.httpService.put(`/api/bookmarks/${id}`, update)
+  createBookmark(newBookmark: Bookmark) {
+    return this.httpService.post('/api/bookmark', newBookmark)
+      .map((response: Response) => <Bookmark>response.json());
+  }
+
+  updateBookmark(id: String, updateBookmark: Bookmark) {
+    return this.httpService.put(`/api/bookmarks/${id}`, updateBookmark)
       .map((response: Response) => <Bookmark>response.json());
   }
 
@@ -62,15 +71,35 @@ export class BookmarkService {
     return converted;
   }
 
+  createMarker(bookmark: Bookmark) {
+    const locationInfo = new LocationInfo(bookmark.id, bookmark.name, bookmark.description, bookmark.created, bookmark.updated);
+    const coords = new Coords(bookmark.lat, bookmark.lng);
+    const infoWindow = new InfoWindow(true);
+    const marker = new Marker(
+      'add',
+      '/assets/images/map/new-marker.png',
+      '',
+      bookmark.name,
+      locationInfo,
+      coords,
+      infoWindow
+    );
+
+    return marker;
+  }
+
   buildMarker(bookmark: Bookmark) {
     const locationInfo = new LocationInfo(bookmark.id, bookmark.name, bookmark.description, bookmark.created, bookmark.updated);
     const coords = new Coords(bookmark.lat, bookmark.lng);
+    const infoWindow = new InfoWindow(false);
     const marker = new Marker(
+      'view',
       '',
       '',
       bookmark.name,
       locationInfo,
-      coords
+      coords,
+      infoWindow
     );
 
     return marker;
@@ -99,12 +128,20 @@ export class BookmarkService {
             resolve(coords);
           },
           (err) => {
-            reject();
+            reject(err);
           }
         );
       }
     });
 
     return promise;
+  }
+
+  getDefaultLocation() {
+    const lat = environment.apis.google_map.default_coordinates.lat;
+    const lng = environment.apis.google_map.default_coordinates.lng;
+
+    const coords = new Coords(lat, lng);
+    return coords;
   }
 }

@@ -5,12 +5,14 @@
   [latitude]="marker.coords.lat" 
   [longitude]="marker.coords.lng">
   <agm-info-window
+    [isOpen]="marker.infoWindow.isOpen"
     (infoWindowClose)="onInfoWindowClose()">
     <app-location-info
-      [mode]="mode"
+      [mode]="marker.mode"
       [locationInfo]="marker.locationInfo"
       (onModeChange)="onLocationInfoModeChanged($event)"
       (onSave)="onLocationInfoSaved($event)"
+      (onUpdate)="onLocationInfoUpdated($event)"
       (onDelete)="onLocationInfoDeleted($event)">
     </app-location-info>
   </agm-info-window>
