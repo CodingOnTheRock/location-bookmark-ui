@@ -41,8 +41,7 @@
 }
 
 .name,
-.email,
-.account {
+.email {
     padding: 5px 0px 0px 0px;
 }
 
@@ -62,15 +61,6 @@
 
 .button {
     cursor: pointer;
-}
-
-.account {
-    font-size: 48px;
-    color: #758593;
-}
-
-.account:hover {
-    color: #4d90fe;
 }
 
 .logout {

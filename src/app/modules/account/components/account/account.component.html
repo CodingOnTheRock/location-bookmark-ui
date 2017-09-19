@@ -14,24 +14,10 @@
       [firstname]="base.profile.firstname"
       [lastname]="base.profile.lastname"
       [email]="base.profile.email"
-      (onAccountClick)="onAccountInfoAccountClick()"
       (onSignOutClick)="onAccountInfoSignOutClick()">
     </app-account-info>
   </section>
   <section class="panel" (click)="panelClick()">
-    <div class="icon-container">
-      <div class="icon-item" (click)="iconClick('bookmark')">
-        <span class="icon-wrapper">
-          <md-icon class="material-icons icon">place</md-icon>
-          <div class="icon-text">Bookmark</div>
-        </span>
-      </div>
-      <div class="icon-item" (click)="iconClick('place')">
-        <span class="icon-wrapper">
-          <md-icon class="material-icons icon" (click)="iconClick('account')">account_circle</md-icon>
-          <div class="icon-text">My Account</div>
-        </span>
-      </div>
-    </div>
+    test
   </section>
 </div>

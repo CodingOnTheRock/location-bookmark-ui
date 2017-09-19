@@ -13,10 +13,10 @@ import { ProfileService } from './../../../shared/services/profile/profile.servi
 import { BaseComponent } from './../../../shared/components/base/base.component';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: 'app-account',
+  templateUrl: './account.component.html',
   styleUrls: [
-    './dashboard.component.css',
+    './account.component.css',
     './../../../shared/styles/shared.css'
   ],
   animations: [
@@ -24,12 +24,12 @@ import { BaseComponent } from './../../../shared/components/base/base.component'
     fade
   ]
 })
-export class DashboardComponent extends BaseComponent implements OnInit {
+export class AccountComponent extends BaseComponent implements OnInit {
   state = {
     ui: {
       toolbar: {
-        icon: 'dashboard',
-        title: 'Dashboard',
+        icon: 'account_circle',
+        title: 'Account',
         isIconActive: false
       },
       accountInfo: {
@@ -52,7 +52,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   onToolbarIconClick(isIconActive) {
-    // No Action
+    this.router.navigate(['/dashboard']);
   }
 
   onToolbarAvatarClick() {
@@ -67,10 +67,6 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     this.state.ui.accountInfo.isShow = isShowAccountInfo;
   }
 
-  onAccountInfoAccountClick() {
-    this.router.navigate(['/account']);
-  }
-
   onAccountInfoSignOutClick() {
     super.signout();
   }
@@ -78,17 +74,6 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   panelClick() {
     if (this.state.ui.accountInfo.isShow) {
       this.showAccountInfo(false);
-    }
-  }
-
-  iconClick(icon: String) {
-    switch (icon) {
-      case 'bookmark' :
-        this.router.navigate(['/bookmark']);
-        break;
-      case 'account' :
-      this.router.navigate(['/account']);
-        break;
     }
   }
 }

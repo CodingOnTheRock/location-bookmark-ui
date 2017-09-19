@@ -14,6 +14,7 @@ import { SignupModule } from './modules/signup/signup.module';
 import { SignoutModule } from './modules/signout/signout.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
+import { AccountModule } from './modules/account/account.module';
 import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
     SignoutModule,
     DashboardModule,
     BookmarkModule,
+    AccountModule,
     AppRoutingModule
   ],
   providers: [],

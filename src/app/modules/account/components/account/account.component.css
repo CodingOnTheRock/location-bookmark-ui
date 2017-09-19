@@ -1,0 +1,7 @@
+section.panel {
+    margin: 68px 0 0 0;
+    padding: 0;
+    overflow: hidden;
+
+    height: calc(100% - 68px);
+}

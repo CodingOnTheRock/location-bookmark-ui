@@ -220,6 +220,14 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     // No Action
   }
 
+  onAccountInfoAccountClick() {
+    this.router.navigate(['/account']);
+  }
+
+  onAccountInfoSignOutClick() {
+    super.signout();
+  }
+
   onSearchBoxFilter(event) {
     const search = event.search;
     const bookmarks = event.bookmarks;
@@ -409,9 +417,5 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
 
   closeSnackBar() {
     this.snackBar.dismiss();
-  }
-
-  onAccountInfoSignOutClick() {
-    super.signout();
   }
 }

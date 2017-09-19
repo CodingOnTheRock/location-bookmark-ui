@@ -1,19 +1,18 @@
 <div class="container">
   <div class="content">
-      <div class="left">
-          <md-icon class="material-icons button image">account_circle</md-icon>
-      </div>
-      <div class="right">
-          <div class="name">{{ firstname }} {{ lastname }}</div>
-          <div class="email">{{ email }}</div>
-          <span class="account" mdTooltip="My Account">
-            <div class="material-icons button account">verified_user</div>
-          </span>
-      </div>
+    <div class="left">
+      <span class="account" mdTooltip="My Account" (click)="accountClick()">
+        <md-icon class="material-icons button image">account_circle</md-icon>
+      </span>
+    </div>
+    <div class="right">
+      <div class="name">{{ firstname }} {{ lastname }}</div>
+      <div class="email">{{ email }}</div>
+    </div>
   </div>
   <div class="footer">
-      <span mdTooltip="Logout">
-        <div class="material-icons button logout" (click)="signOutClick()">power_settings_new</div>
-      </span>
+    <span mdTooltip="Logout">
+      <div class="material-icons button logout" (click)="signOutClick()">power_settings_new</div>
+    </span>
   </div>
 </div>
