@@ -37,11 +37,13 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
   state = {
     ui: {
       toolbar: {
+        avatar: undefined,
         icon: 'place',
         title: 'Bookmark',
         isIconActive: false
       },
       accountInfo: {
+        avatar: undefined,
         isShow: false
       },
       map: {
@@ -205,6 +207,11 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     this.showMenu(true);
     this.showAccountInfo(false);
     this.closeSnackBar();
+  }
+
+  onBaseComponentReady() {
+    const photo = super.getPhoto();
+    this.state.ui.toolbar.avatar = this.state.ui.accountInfo.avatar = photo;
   }
 
   onToolbarIconClick(isIconActive: Boolean) {

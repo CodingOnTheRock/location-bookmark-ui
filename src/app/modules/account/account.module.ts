@@ -7,6 +7,10 @@ import { AccountRoutingModule } from './account-routing.module';
 
 // Components
 import { AccountComponent } from './components/account/account.component';
+import { MenuListComponent } from './components/menu-list/menu-list.component';
+import { MenuItemComponent } from './components/menu-item/menu-item.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -16,6 +20,12 @@ import { AccountComponent } from './components/account/account.component';
   providers: [
     AccountComponent
   ],
-  declarations: [AccountComponent]
+  declarations: [
+    AccountComponent,
+    MenuItemComponent,
+    MenuListComponent,
+    ProfileComponent,
+    ChangePasswordComponent
+  ]
 })
 export class AccountModule { }

@@ -2,7 +2,12 @@
   <div class="content">
     <div class="left">
       <span class="account" mdTooltip="My Account" (click)="accountClick()">
-        <md-icon class="material-icons button image">account_circle</md-icon>
+        <md-icon *ngIf="!avatar"
+          class="material-icons button no-avatar">account_circle</md-icon>
+        <div *ngIf="avatar" 
+          class="button avatar" 
+          [ngStyle]="{ 'background-image': 'url(' + avatar + ')' }">
+        </div>
       </span>
     </div>
     <div class="right">

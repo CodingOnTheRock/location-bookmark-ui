@@ -1,5 +1,7 @@
+// Core Modules
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+// Animations
 import { slideLTR } from './../../../../core/animations/slide';
 
 @Component({
@@ -11,6 +13,7 @@ import { slideLTR } from './../../../../core/animations/slide';
   ]
 })
 export class ToolbarComponent implements OnInit {
+  @Input() avatar: String = undefined;
   @Input() icon: String = '';
   @Input() title: String = '';
   @Input() username: String = '';
@@ -21,10 +24,9 @@ export class ToolbarComponent implements OnInit {
 
   isShowUsername: Boolean = false;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   iconClick() {
     this.isIconActive = !this.isIconActive;

@@ -1,6 +1,8 @@
 <div class="container">
+  <app-base-component (onReady)="onBaseComponentReady()"></app-base-component>
   <header>
     <app-toolbar 
+      [avatar]="state.ui.toolbar.avatar"
       [icon]="state.ui.toolbar.icon"
       [title]="state.ui.toolbar.title"
       [isIconActive]="state.ui.toolbar.isIconActive"
@@ -11,6 +13,7 @@
   </header>
   <section class="account-info" *ngIf="state.ui.accountInfo.isShow" [@fade]>
     <app-account-info 
+      [avatar]="state.ui.accountInfo.avatar"
       [firstname]="base.profile.firstname"
       [lastname]="base.profile.lastname"
       [email]="base.profile.email"
@@ -18,6 +21,17 @@
     </app-account-info>
   </section>
   <section class="panel" (click)="panelClick()">
-    test
+    <aside class="menu">
+      <app-menu-list
+        (onReady)="onMenuListReady($event)"
+        (onMenuItemSelected)="onMenuListItemSelected($event)">
+      </app-menu-list>
+    </aside>
+    <section class="content">
+      <app-profile *ngIf="this.state.ui.panel.isShowProfile">
+      </app-profile>
+      <app-change-password *ngIf="this.state.ui.panel.isShowChangePassword">
+      </app-change-password>
+    </section>
   </section>
 </div>

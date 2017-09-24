@@ -1,0 +1,28 @@
+.container {
+    margin: 0;
+    padding: 15px 10px 15px 30px;
+
+    width: inherit;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.container:hover {
+    cursor: pointer;
+
+    color: #ffffff;
+    background-color: #758593;
+    border-bottom: 1px solid #ffffff;
+}
+
+.title {
+    font-family: 'Baloo Bhaijaan', cursive;
+    font-size: 1.2em;
+}
+
+.itemSelected {
+    color: #ffffff;
+    background-color: #758593;
+    border-bottom: 1px solid #ffffff;
+}

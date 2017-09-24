@@ -54,7 +54,16 @@
     font-weight: bold;
 }
 
-.image {
+.avatar {
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+
+    height: 96px;
+    width: 96px;
+}
+
+.no-avatar {
     font-size: 96px;
     color: rgba(0, 0, 0, 0.50);
 }

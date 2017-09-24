@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./account-info.component.css']
 })
 export class AccountInfoComponent implements OnInit {
+  @Input() avatar: String = undefined;
   @Input() firstname: String = '';
   @Input() lastname: String = '';
   @Input() email: String = '';

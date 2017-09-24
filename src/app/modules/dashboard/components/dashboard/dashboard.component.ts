@@ -28,11 +28,13 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   state = {
     ui: {
       toolbar: {
+        avatar: undefined,
         icon: 'dashboard',
         title: 'Dashboard',
         isIconActive: false
       },
       accountInfo: {
+        avatar: undefined,
         isShow: false
       }
     }
@@ -48,7 +50,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onBaseComponentReady() {
+    const photo = super.getPhoto();
+    this.state.ui.toolbar.avatar = this.state.ui.accountInfo.avatar = photo;
   }
 
   onToolbarIconClick(isIconActive) {

@@ -59,11 +59,14 @@
 }
 
 .avatar {
-    background-image: url('/assets/images/avatar.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 50%;
 
     height: 45px;
     width: 45px;
+}
+
+.no-avatar {
+    background-image: url('/assets/images/avatar.jpg');
 }

@@ -1,0 +1,8 @@
+<div class="container">
+  <app-menu-item *ngFor="let menu of state.ui.menus"
+    [name]="menu.name"
+    [title]="menu.title"
+    (onReady)="menuItemReady($event)"
+    (onMenuClick)="menuItemClick($event)">
+  </app-menu-item>
+</div>

@@ -4,7 +4,13 @@
     <span class="title">{{ title }}</span>
     <span class="space"></span>
     <div class="name" *ngIf="isShowUsername" [@slideLTR]>{{ username }}</div>
-    <div class="avatar"
+    <div class="avatar no-avatar"
+      *ngIf="!avatar"
+      (click)="avatarClick()"
+      (mouseenter)="avatarMouseEnter()"
+      (mouseleave)="avatarMouseLeave()"></div>
+    <div class="avatar" [ngStyle]="{ 'background-image': 'url(' + avatar + ')' }"
+      *ngIf="avatar"
       (click)="avatarClick()"
       (mouseenter)="avatarMouseEnter()"
       (mouseleave)="avatarMouseLeave()"></div>

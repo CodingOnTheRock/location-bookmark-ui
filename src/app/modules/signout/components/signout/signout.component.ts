@@ -31,7 +31,9 @@ export class SignoutComponent extends BaseComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onBaseComponentReady() {
     this.clearSession();
     this.redirectToSignin();
   }
@@ -42,6 +44,7 @@ export class SignoutComponent extends BaseComponent implements OnInit {
   }
 
   redirectToSignin() {
-    this.router.navigate(['/signin'], { queryParams: { email: this.base.profile.email } });
+    const profile = super.getProfile();
+    this.router.navigate(['/signin'], { queryParams: { email: profile.email } });
   }
 }
