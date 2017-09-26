@@ -40,10 +40,14 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
         avatar: undefined,
         icon: 'place',
         title: 'Bookmark',
+        username: undefined,
         isIconActive: false
       },
       accountInfo: {
         avatar: undefined,
+        firstname: undefined,
+        lastname: undefined,
+        email: undefined,
         isShow: false
       },
       map: {
@@ -78,7 +82,27 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.onReady.subscribe(() => {
+      this.onComponentReady();
+    });
+
     this.initial();
+  }
+
+  onComponentReady() {
+    const firstname = super.getFirstname();
+    const lastname = super.getLastname();
+    const name = super.getName();
+    const email = super.getEmail();
+    const photo = super.getPhoto();
+
+    this.state.ui.toolbar.avatar = photo;
+    this.state.ui.toolbar.username = name;
+
+    this.state.ui.accountInfo.avatar = photo;
+    this.state.ui.accountInfo.firstname = firstname;
+    this.state.ui.accountInfo.lastname = lastname;
+    this.state.ui.accountInfo.email = email;
   }
 
   initial() {

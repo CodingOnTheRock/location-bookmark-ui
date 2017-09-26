@@ -31,9 +31,13 @@ export class SignoutComponent extends BaseComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.onReady.subscribe(() => {
+      this.onComponentReady();
+    });
+  }
 
-  onBaseComponentReady() {
+  onComponentReady() {
     this.clearSession();
     this.redirectToSignin();
   }

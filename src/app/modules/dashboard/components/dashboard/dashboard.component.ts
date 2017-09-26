@@ -31,10 +31,14 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         avatar: undefined,
         icon: 'dashboard',
         title: 'Dashboard',
+        username: undefined,
         isIconActive: false
       },
       accountInfo: {
         avatar: undefined,
+        firstname: undefined,
+        lastname: undefined,
+        email: undefined,
         isShow: false
       }
     }
@@ -50,11 +54,26 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.onReady.subscribe(() => {
+      this.onComponentReady();
+    });
+  }
 
-  onBaseComponentReady() {
+  onComponentReady() {
+    const firstname = super.getFirstname();
+    const lastname = super.getLastname();
+    const name = super.getName();
+    const email = super.getEmail();
     const photo = super.getPhoto();
-    this.state.ui.toolbar.avatar = this.state.ui.accountInfo.avatar = photo;
+
+    this.state.ui.toolbar.avatar = photo;
+    this.state.ui.toolbar.username = name;
+
+    this.state.ui.accountInfo.avatar = photo;
+    this.state.ui.accountInfo.firstname = firstname;
+    this.state.ui.accountInfo.lastname = lastname;
+    this.state.ui.accountInfo.email = email;
   }
 
   onToolbarIconClick(isIconActive) {

@@ -5,21 +5,15 @@ import { Router } from '@angular/router';
 // Services
 import { ProfileService } from './../../../shared/services/profile/profile.service';
 
-@Component({
-  selector: 'app-base-component',
-  template: ''
-})
 export class BaseComponent {
   @Output() onReady = new EventEmitter();
 
-  base = {
-    profile: {
-      firstname: '',
-      lastname: '',
-      name: '',
-      email: '',
-      photo: ''
-    }
+  private profile: {
+    firstname: '',
+    lastname: '',
+    name: '',
+    email: '',
+    photo: ''
   };
 
   constructor(
@@ -31,30 +25,62 @@ export class BaseComponent {
 
   customInit() {
     this.profileService.getProfile()
-    .then((profile) => {
-      this.manageProfile(profile);
-      this.onReady.emit();
-    })
-    .catch((err) => {
-      // Authentication failed (Invalid token or somethings broken)
-      this.router.navigate(['/signin']);
-    });
+      .then((profile) => {
+        this.manageProfile(profile);
+        this.onReady.emit();
+      })
+      .catch((err) => {
+        // Authentication failed (Invalid token or somethings broken)
+        this.router.navigate(['/signin']);
+      });
   }
 
   manageProfile(profile) {
-    this.base.profile = profile;
+    this.profile = profile;
   }
 
   getProfile() {
-    return this.base.profile;
+    return this.profile;
   }
 
-  getPhoto() {
-    if (!this.base.profile.photo) {
+  getFirstname() {
+    if (!this.profile.firstname) {
       return undefined;
     }
 
-    return './../../' + this.base.profile.photo;
+    return this.profile.firstname;
+  }
+
+  getLastname() {
+    if (!this.profile.lastname) {
+      return undefined;
+    }
+
+    return this.profile.lastname;
+  }
+
+  getName() {
+    if (!this.profile.name) {
+      return undefined;
+    }
+
+    return this.profile.name;
+  }
+
+  getEmail() {
+    if (!this.profile.email) {
+      return undefined;
+    }
+
+    return this.profile.email;
+  }
+
+  getPhoto() {
+    if (!this.profile.photo) {
+      return undefined;
+    }
+
+    return './../../' + this.profile.photo;
   }
 
   signout() {

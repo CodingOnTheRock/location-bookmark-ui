@@ -1,12 +1,11 @@
 <div class="container">
-  <app-base-component (onReady)="onBaseComponentReady()"></app-base-component>
   <header>
     <app-toolbar 
       [avatar]="state.ui.toolbar.avatar"
       [icon]="state.ui.toolbar.icon"
       [title]="state.ui.toolbar.title"
       [isIconActive]="state.ui.toolbar.isIconActive"
-      [username]="base.profile.name"
+      [username]="state.ui.toolbar.username"
       (onIconClick)="onToolbarIconClick($event)"
       (onAvatarClick)="onToolbarAvatarClick()"
       (onAvatarMouseEnterLeave)="onToolbarAvatarMouseEnterLeave($event)"></app-toolbar>
@@ -14,9 +13,10 @@
   <section class="account-info" *ngIf="state.ui.accountInfo.isShow" [@fade]>
     <app-account-info 
       [avatar]="state.ui.accountInfo.avatar"
-      [firstname]="base.profile.firstname"
-      [lastname]="base.profile.lastname"
-      [email]="base.profile.email"
+      [firstname]="state.ui.accountInfo.firstname"
+      [lastname]="state.ui.accountInfo.lastname"
+      [email]="state.ui.accountInfo.email"
+      (onAccountClick)="onAccountInfoAccountClick()"
       (onSignOutClick)="onAccountInfoSignOutClick()">
     </app-account-info>
   </section>

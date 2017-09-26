@@ -23,7 +23,6 @@ import { ProfileService } from './services/profile/profile.service';
 import { AuthGuard } from './guards/auth/auth.guard';
 
 // Components
-import { BaseComponent } from './components/base/base.component';
 import { ProgressBarComponent } from './components/progressbar/progressbar.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { AccountInfoComponent } from './components/account-info/account-info.component';
@@ -54,7 +53,6 @@ import { environment } from './../../../environments/environment';
     MdAutocompleteModule
   ],
   declarations: [
-    BaseComponent,
     ProgressBarComponent,
     ToolbarComponent,
     AccountInfoComponent,
@@ -87,7 +85,6 @@ import { environment } from './../../../environments/environment';
     MdTooltipModule,
     MdAutocompleteModule,
 
-    BaseComponent,
     ProgressBarComponent,
     ToolbarComponent,
     AccountInfoComponent,
