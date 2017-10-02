@@ -26,8 +26,12 @@ export class BaseComponent {
   customInit() {
     this.profileService.getProfile()
       .then((profile) => {
-        this.manageProfile(profile);
-        this.onReady.emit();
+        this.setProfile(profile);
+
+        // Set delay without time
+        setTimeout(() => {
+          this.onReady.emit();
+        });
       })
       .catch((err) => {
         // Authentication failed (Invalid token or somethings broken)
@@ -35,7 +39,7 @@ export class BaseComponent {
       });
   }
 
-  manageProfile(profile) {
+  setProfile(profile) {
     this.profile = profile;
   }
 

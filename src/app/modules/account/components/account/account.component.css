@@ -4,13 +4,12 @@ section.panel {
     overflow: hidden;
 
     height: calc(100% - 68px);
-
+    
     display: flex;
 }
 
 aside.menu {
     width: 300px;
-    height: 100%;
     
     background-color: #f7f7f7;
     box-shadow: 0px 0px 5px #808080;
@@ -18,7 +17,5 @@ aside.menu {
 }
 
 section.content {
-    padding: 20px 20px;
-    
-    width: 100%;
+    width: calc(100% - 300px);
 }

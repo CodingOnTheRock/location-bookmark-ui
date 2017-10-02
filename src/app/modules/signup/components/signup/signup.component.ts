@@ -5,8 +5,10 @@ import { Router } from '@angular/router';
 
 // Services
 import { EMAIL_REGEX } from './../../../../core/utils/regular-expression';
-import { Signup } from './../../models/signup.model';
 import { HttpService } from './../../../shared/services/http/http.service';
+
+// Models
+import { Signup } from './../../models/signup.model';
 
 // Components
 import { MdSnackBar } from '@angular/material';
@@ -180,6 +182,8 @@ export class SignupComponent implements OnInit {
   signupFailed(err) {
     this.state.signupMsg = err;
     this.state.isSignupFailed = true;
+
+    this.afterSignupRequest();
   }
 
   signupCompleted() {

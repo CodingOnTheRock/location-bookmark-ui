@@ -22,16 +22,13 @@
   </section>
   <section class="panel" (click)="panelClick()">
     <aside class="menu">
-      <app-menu-list
+      <app-menu-list #menuList
         (onReady)="onMenuListReady($event)"
         (onMenuItemSelected)="onMenuListItemSelected($event)">
       </app-menu-list>
     </aside>
     <section class="content">
-      <app-profile *ngIf="this.state.ui.panel.isShowProfile">
-      </app-profile>
-      <app-change-password *ngIf="this.state.ui.panel.isShowChangePassword">
-      </app-change-password>
+      <router-outlet></router-outlet>
     </section>
   </section>
 </div>

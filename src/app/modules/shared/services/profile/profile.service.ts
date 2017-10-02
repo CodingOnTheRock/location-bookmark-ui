@@ -19,30 +19,29 @@ export class ProfileService {
       let profile;
 
       // Get profile from local storage
-      // profile = this.getProfileFromLocalStorage();
-      // if (profile) {
-      //   resolve(JSON.parse(profile));
-      //   return;
-      // }
+      profile = this.getProfileFromLocalStorage();
+      if (profile) {
+        resolve(JSON.parse(profile));
+      } else {
+        // Get profile from service
+        this.getProfileFromService()
+          .subscribe(
+            (data) => {
+              const response = data.json();
+              profile = response.decoded._doc;
+              delete profile.password;
 
-      // Get profile from service
-      this.getProfileFromService()
-        .subscribe(
-          (data) => {
-            const response = data.json();
-            profile = response.decoded._doc;
-            delete profile.password;
+              // Keep profile in local storage
+              this.setProfile(JSON.stringify(profile));
 
-            // Keep profile in local storage
-            this.setProfile(JSON.stringify(profile));
-
-            resolve(profile);
-          },
-          (err) => {
-            reject(err);
-          },
-          () => {}
-        );
+              resolve(profile);
+            },
+            (err) => {
+              reject(err);
+            },
+            () => {}
+          );
+      }
     });
 
     return promise;

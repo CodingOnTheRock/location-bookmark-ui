@@ -56,6 +56,7 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
         markers: new Array<Marker>()
       },
       searchBox: {
+        search: '',
         bookmarks: new Array<Bookmark>()
       },
       bookmarkList: {
@@ -84,9 +85,8 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.onReady.subscribe(() => {
       this.onComponentReady();
+      this.initial();
     });
-
-    this.initial();
   }
 
   onComponentReady() {
@@ -233,11 +233,6 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     this.closeSnackBar();
   }
 
-  onBaseComponentReady() {
-    const photo = super.getPhoto();
-    this.state.ui.toolbar.avatar = this.state.ui.accountInfo.avatar = photo;
-  }
-
   onToolbarIconClick(isIconActive: Boolean) {
     this.router.navigate(['/dashboard']);
   }
@@ -263,11 +258,8 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     const search = event.search;
     const bookmarks = event.bookmarks;
 
-    if (search.length === 0) {
-      this.state.ui.bookmarkList.bookmarks = this.state.data.bookmarks;
-    } else {
-      this.state.ui.bookmarkList.bookmarks = bookmarks;
-    }
+    this.state.ui.searchBox.search = search;
+    this.state.ui.bookmarkList.bookmarks = (search.length === 0) ? this.state.data.bookmarks : bookmarks;
   }
 
   onSearchBoxSelect(bookmark: Bookmark) {

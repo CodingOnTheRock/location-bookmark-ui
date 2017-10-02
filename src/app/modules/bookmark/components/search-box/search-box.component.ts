@@ -16,6 +16,7 @@ import { Bookmark } from './../../models/bookmark.model';
   styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent implements OnInit {
+  @Input() search: String = '';
   @Input() bookmarks: Array<Bookmark> = [];
   @Output() onFilter = new EventEmitter();
   @Output() onSelect: EventEmitter<Bookmark> = new EventEmitter<Bookmark>();
@@ -50,6 +51,7 @@ export class SearchBoxComponent implements OnInit {
 
         this.onFilter.emit(params);
       });
+    this.tbx_search.setValue(this.search);
   }
 
   searchPlaces(term) {

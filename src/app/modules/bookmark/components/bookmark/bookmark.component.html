@@ -17,12 +17,13 @@
   </div>
   <aside *ngIf="state.ui.toolbar.isIconActive" [@slideLTR]>
     <app-search-box 
-      [bookmarks]="this.state.ui.searchBox.bookmarks"
+      [search]="state.ui.searchBox.search"
+      [bookmarks]="state.ui.searchBox.bookmarks"
       (onFilter)="onSearchBoxFilter($event)"
       (onSelect)="onSearchBoxSelect($event)">
     </app-search-box>
     <app-bookmark-list 
-      [bookmarks]="this.state.ui.bookmarkList.bookmarks"
+      [bookmarks]="state.ui.bookmarkList.bookmarks"
       (onBookmarkItemCoordsClick)="onBookmarkListCoordsClick($event)">
     </app-bookmark-list>
   </aside>

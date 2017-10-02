@@ -30,12 +30,11 @@ export class MenuListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.onReady.emit(this);
   }
 
   menuItemReady(menuItem: MenuItemComponent) {
     this.state.ui.menuItems.push(menuItem);
-
-    this.onReady.emit(this);
   }
 
   menuItemClick(menuItem: MenuItemComponent) {
@@ -58,7 +57,15 @@ export class MenuListComponent implements OnInit {
     }
   }
 
-  selectDefault() {
-    this.state.ui.menuItems[0].menuClick();
+  getMenuByName(name: String) {
+    let menu = null;
+    for (let i = 0; i < this.state.ui.menuItems.length; i++) {
+      if (this.state.ui.menuItems[i].name === name) {
+        menu = this.state.ui.menuItems[i];
+        break;
+      }
+    }
+
+    return menu;
   }
 }

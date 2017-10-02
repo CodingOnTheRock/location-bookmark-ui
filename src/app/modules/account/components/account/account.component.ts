@@ -1,5 +1,5 @@
 // Core Modules
-import { Component, trigger, transition, style, animate, OnInit } from '@angular/core';
+import { Component, trigger, transition, style, animate, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Animations
@@ -27,6 +27,8 @@ import { MenuItemComponent } from './../menu-item/menu-item.component';
   ]
 })
 export class AccountComponent extends BaseComponent implements OnInit {
+  @ViewChild('menuList') menuList: MenuListComponent;
+
   state = {
     ui: {
       toolbar: {
@@ -45,10 +47,6 @@ export class AccountComponent extends BaseComponent implements OnInit {
       },
       menu: {
         selected: undefined
-      },
-      panel: {
-        isShowProfile: false,
-        isShowChangePassword: false,
       }
     }
   };
@@ -66,6 +64,7 @@ export class AccountComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.onReady.subscribe(() => {
       this.onComponentReady();
+      this.selectMenuByPath();
     });
   }
 
@@ -102,7 +101,7 @@ export class AccountComponent extends BaseComponent implements OnInit {
   }
 
   onAccountInfoAccountClick() {
-    // No Action
+    this.router.navigate(['/account']);
   }
 
   onAccountInfoSignOutClick() {
@@ -110,16 +109,12 @@ export class AccountComponent extends BaseComponent implements OnInit {
   }
 
   onMenuListReady(menuList: MenuListComponent) {
-    menuList.selectDefault();
+    // No Action
   }
 
   onMenuListItemSelected(menuItem: MenuItemComponent) {
-    this.state.ui.menu.selected = menuItem;
-
-    setTimeout(() => {
-      this.hideContent();
-      this.showContent(menuItem);
-    }, 100);
+    const name = menuItem.name;
+    this.router.navigate(['/account/' + name]);
   }
 
   panelClick() {
@@ -128,20 +123,17 @@ export class AccountComponent extends BaseComponent implements OnInit {
     }
   }
 
-  showContent(menu: MenuItemComponent) {
-    const name = menu.name;
-    switch (name) {
+  selectMenuByPath() {
+    const urlPaths = this.router.url.split('/');
+    let menuName = urlPaths[urlPaths.length - 1];
+    menuName = menuName === 'account' ? 'profile' : menuName;
+
+    switch (menuName) {
       case 'profile':
-        this.state.ui.panel.isShowProfile = true;
-        break;
       case 'change-password':
-        this.state.ui.panel.isShowChangePassword = true;
+        const menuItem = this.menuList.getMenuByName(menuName);
+        this.menuList.menuItemClick(menuItem);
         break;
     }
-  }
-
-  hideContent() {
-    this.state.ui.panel.isShowProfile = false;
-    this.state.ui.panel.isShowChangePassword = false;
   }
 }
