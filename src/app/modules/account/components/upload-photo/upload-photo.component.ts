@@ -9,21 +9,15 @@ import { ProfileService } from './../../../shared/services/profile/profile.servi
 import { BaseComponent } from './../../../shared/components/base/base.component';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: 'app-upload-photo',
+  templateUrl: './upload-photo.component.html',
+  styleUrls: ['./upload-photo.component.css']
 })
-export class ProfileComponent extends BaseComponent implements OnDestroy {
+export class UploadPhotoComponent extends BaseComponent implements OnDestroy {
   state = {
     events: {
       onReady: undefined,
       onProfileLoaded: undefined
-    },
-    ui: {
-      firstname: '',
-      lastname: '',
-      name: '',
-      email: '',
     }
   };
 
@@ -58,9 +52,6 @@ export class ProfileComponent extends BaseComponent implements OnDestroy {
   }
 
   initial() {
-    this.state.ui.firstname = this.getFirstname();
-    this.state.ui.lastname = this.getLastname();
-    this.state.ui.name = this.getName();
-    this.state.ui.email = this.getEmail();
+    // No Action
   }
 }

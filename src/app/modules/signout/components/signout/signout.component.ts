@@ -1,5 +1,5 @@
 // Core Modules
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 // Services
@@ -17,7 +17,15 @@ import { BaseComponent } from './../../../shared/components/base/base.component'
     './../../../shared/styles/shared.css'
   ]
 })
-export class SignoutComponent extends BaseComponent implements OnInit {
+export class SignoutComponent extends BaseComponent implements OnDestroy {
+  state = {
+    events: {
+      onReady: undefined,
+      onProfileLoaded: undefined,
+      onProfileFailed: undefined
+    }
+  };
+  profile = undefined;
 
   constructor(
     public router: Router,
@@ -29,17 +37,39 @@ export class SignoutComponent extends BaseComponent implements OnInit {
       router,
       profileService
     );
+
+    this.subscribeEvents();
   }
 
-  ngOnInit() {
-    this.onReady.subscribe(() => {
-      this.onComponentReady();
+  ngOnDestroy() {
+    this.unsubscribeEvents();
+  }
+
+  subscribeEvents() {
+    this.state.events.onReady = this.onReady.subscribe(() => {
+      this.childReady();
+    });
+    this.state.events.onProfileLoaded = this.onProfileLoaded.subscribe(() => {
+      this.initial();
+    });
+    this.state.events.onProfileFailed = this.onProfileFailed.subscribe(() => {
+      this.redirectToSignin({});
+      return;
     });
   }
 
-  onComponentReady() {
+  unsubscribeEvents() {
+    this.state.events.onReady.unsubscribe();
+    this.state.events.onProfileLoaded.unsubscribe();
+    this.state.events.onProfileFailed.unsubscribe();
+  }
+
+  initial() {
+    this.profile = super.getProfile();
+    const params = { queryParams: { email: this.profile.email } };
+
     this.clearSession();
-    this.redirectToSignin();
+    this.redirectToSignin(params);
   }
 
   clearSession() {
@@ -47,8 +77,7 @@ export class SignoutComponent extends BaseComponent implements OnInit {
     this.profileService.clearProfile();
   }
 
-  redirectToSignin() {
-    const profile = super.getProfile();
-    this.router.navigate(['/signin'], { queryParams: { email: profile.email } });
+  redirectToSignin(params) {
+    this.router.navigate(['/signin'], params);
   }
 }

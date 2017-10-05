@@ -1,5 +1,5 @@
 // Core Modules
-import { Component, trigger, transition, style, animate, OnInit } from '@angular/core';
+import { Component, trigger, transition, style, animate, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Animations
@@ -33,8 +33,12 @@ import { MdSnackBar } from '@angular/material';
     fade
   ]
 })
-export class BookmarkComponent extends BaseComponent implements OnInit {
+export class BookmarkComponent extends BaseComponent implements OnDestroy {
   state = {
+    events: {
+      onReady: undefined,
+      onProfileLoaded: undefined
+    },
     ui: {
       toolbar: {
         avatar: undefined,
@@ -80,16 +84,30 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
       router,
       profileService
     );
+
+    this.subscribeEvents();
   }
 
-  ngOnInit() {
-    this.onReady.subscribe(() => {
-      this.onComponentReady();
+  ngOnDestroy() {
+    this.unsubscribeEvents();
+  }
+
+  subscribeEvents() {
+    this.state.events.onReady = this.onReady.subscribe(() => {
+      this.childReady();
+    });
+    this.state.events.onProfileLoaded = this.onProfileLoaded.subscribe(() => {
       this.initial();
+      this.startTasks();
     });
   }
 
-  onComponentReady() {
+  unsubscribeEvents() {
+    this.state.events.onReady.unsubscribe();
+    this.state.events.onProfileLoaded.unsubscribe();
+  }
+
+  initial() {
     const firstname = super.getFirstname();
     const lastname = super.getLastname();
     const name = super.getName();
@@ -105,7 +123,7 @@ export class BookmarkComponent extends BaseComponent implements OnInit {
     this.state.ui.accountInfo.email = email;
   }
 
-  initial() {
+  startTasks() {
     const tasks = this.refreshTask();
     tasks
       .then(() => {

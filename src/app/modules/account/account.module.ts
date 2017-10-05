@@ -10,6 +10,7 @@ import { AccountComponent } from './components/account/account.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { UploadPhotoComponent } from './components/upload-photo/upload-photo.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     MenuItemComponent,
     MenuListComponent,
     ProfileComponent,
+    UploadPhotoComponent,
     ChangePasswordComponent
   ]
 })

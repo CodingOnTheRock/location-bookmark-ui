@@ -18,6 +18,7 @@ export class MenuListComponent implements OnInit {
       menuItems: new Array<MenuItemComponent>(),
       menus: [
         { name: 'profile', title: 'Profile' },
+        { name: 'upload-photo', title: 'Upload Photo' },
         { name: 'change-password', title: 'Change Password' }
       ],
       changes: {

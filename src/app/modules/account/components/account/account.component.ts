@@ -1,5 +1,5 @@
 // Core Modules
-import { Component, trigger, transition, style, animate, OnInit, ViewChild } from '@angular/core';
+import { Component, trigger, transition, style, animate, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Animations
@@ -26,10 +26,15 @@ import { MenuItemComponent } from './../menu-item/menu-item.component';
     fade
   ]
 })
-export class AccountComponent extends BaseComponent implements OnInit {
+export class AccountComponent extends BaseComponent implements OnDestroy {
   @ViewChild('menuList') menuList: MenuListComponent;
 
   state = {
+    events: {
+      onReady: undefined,
+      onProfileLoaded: undefined,
+      onProfileReloaded: undefined
+    },
     ui: {
       toolbar: {
         avatar: undefined,
@@ -59,16 +64,34 @@ export class AccountComponent extends BaseComponent implements OnInit {
       router,
       profileService
     );
+
+    this.subscribeEvents();
   }
 
-  ngOnInit() {
-    this.onReady.subscribe(() => {
-      this.onComponentReady();
+  ngOnDestroy() {
+    this.unsubscribeEvents();
+  }
+
+  subscribeEvents() {
+    this.state.events.onReady = this.onReady.subscribe(() => {
+      this.childReady();
+    });
+    this.state.events.onProfileLoaded = this.onProfileLoaded.subscribe(() => {
+      this.initial();
       this.selectMenuByPath();
+    });
+    this.state.events.onProfileReloaded = this.onProfileReloaded.subscribe(() => {
+      this.initial();
     });
   }
 
-  onComponentReady() {
+  unsubscribeEvents() {
+    this.state.events.onReady.unsubscribe();
+    this.state.events.onProfileLoaded.unsubscribe();
+    this.state.events.onProfileReloaded.unsubscribe();
+  }
+
+  initial() {
     const firstname = super.getFirstname();
     const lastname = super.getLastname();
     const name = super.getName();
@@ -101,7 +124,7 @@ export class AccountComponent extends BaseComponent implements OnInit {
   }
 
   onAccountInfoAccountClick() {
-    this.router.navigate(['/account']);
+    this.router.navigate(['/account/profile']);
   }
 
   onAccountInfoSignOutClick() {
@@ -130,6 +153,7 @@ export class AccountComponent extends BaseComponent implements OnInit {
 
     switch (menuName) {
       case 'profile':
+      case 'upload-photo':
       case 'change-password':
         const menuItem = this.menuList.getMenuByName(menuName);
         this.menuList.menuItemClick(menuItem);

@@ -1,90 +1,105 @@
 // Core Modules
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Services
 import { ProfileService } from './../../../shared/services/profile/profile.service';
 
-export class BaseComponent {
+export class BaseComponent implements OnInit {
   @Output() onReady = new EventEmitter();
-
-  private profile: {
-    firstname: '',
-    lastname: '',
-    name: '',
-    email: '',
-    photo: ''
-  };
+  @Output() onProfileLoaded = new EventEmitter();
+  @Output() onProfileReloaded = new EventEmitter();
+  @Output() onProfileFailed = new EventEmitter();
 
   constructor(
     public router: Router,
     public profileService: ProfileService
-  ) {
-    this.customInit();
+  ) {}
+
+  ngOnInit() {
+    this.profileService.onLoaded.subscribe(() => {
+      this.onProfileLoaded.emit();
+    });
+
+    this.profileService.onReloaded.subscribe(() => {
+      this.onProfileReloaded.emit();
+    });
+
+    this.profileService.onFailed.subscribe(() => {
+      const url = this.router.url;
+
+      switch (url) {
+        case '/signout':
+          this.onProfileFailed.emit();
+          break;
+        default:
+          this.signout();
+          break;
+      }
+    });
+
+    this.onReady.emit();
   }
 
-  customInit() {
-    this.profileService.getProfile()
-      .then((profile) => {
-        this.setProfile(profile);
-
-        // Set delay without time
-        setTimeout(() => {
-          this.onReady.emit();
-        });
-      })
-      .catch((err) => {
-        // Authentication failed (Invalid token or somethings broken)
-        this.router.navigate(['/signin']);
-      });
+  childReady() {
+    this.loadProfile();
   }
 
-  setProfile(profile) {
-    this.profile = profile;
+  loadProfile() {
+    this.profileService.load();
+  }
+
+  reloadProfile() {
+    this.profileService.reload();
   }
 
   getProfile() {
-    return this.profile;
+    return this.profileService.getProfile();
   }
 
   getFirstname() {
-    if (!this.profile.firstname) {
+    const profile = this.getProfile();
+    if (!profile.firstname) {
       return undefined;
     }
 
-    return this.profile.firstname;
+    return profile.firstname;
   }
 
   getLastname() {
-    if (!this.profile.lastname) {
+    const profile = this.getProfile();
+    if (!profile.lastname) {
       return undefined;
     }
 
-    return this.profile.lastname;
+    return profile.lastname;
   }
 
   getName() {
-    if (!this.profile.name) {
+    const profile = this.getProfile();
+    if (!profile.name) {
       return undefined;
     }
 
-    return this.profile.name;
+    return profile.name;
   }
 
   getEmail() {
-    if (!this.profile.email) {
+    const profile = this.getProfile();
+    if (!profile.email) {
       return undefined;
     }
 
-    return this.profile.email;
+    return profile.email;
   }
 
   getPhoto() {
-    if (!this.profile.photo) {
+    const profile = this.getProfile();
+    if (!profile.photo) {
       return undefined;
     }
 
-    return './../../' + this.profile.photo;
+    return './../../' + profile.photo;
   }
 
   signout() {

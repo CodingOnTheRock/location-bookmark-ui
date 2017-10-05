@@ -8,6 +8,7 @@ import { AuthGuard } from './../shared/guards/auth/auth.guard';
 // Components
 import { AccountComponent } from './components/account/account.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { UploadPhotoComponent } from './components/upload-photo/upload-photo.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 // Routes
@@ -18,6 +19,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+      { path: 'upload-photo', component: UploadPhotoComponent, canActivate: [AuthGuard] },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard] }
     ]
   }

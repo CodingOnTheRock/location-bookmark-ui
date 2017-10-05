@@ -1,0 +1,30 @@
+.container {
+    margin: 0px;
+    padding: 0px;
+
+    width: auto;
+}
+
+.profile {
+    margin: 35px 35px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.profile > * {
+    margin: 20px 0px;
+}
+
+.title {
+    width: 80px;
+    display: inline-block;
+
+    text-align: right;
+    font-family: 'Baloo Bhaijaan', cursive;
+    font-size: 1.2em;
+}
+
+.value {
+    padding: 20px;
+}

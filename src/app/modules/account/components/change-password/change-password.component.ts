@@ -1,15 +1,17 @@
 // Core Modules
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 // Services
 import { HttpService } from './../../../shared/services/http/http.service';
+import { ProfileService } from './../../../shared/services/profile/profile.service';
 
 // Models
 import { ChangePassword } from './../../models/change-password.model';
 
 // Components
+import { BaseComponent } from './../../../shared/components/base/base.component';
 import { MdSnackBar } from '@angular/material';
 
 @Component({
@@ -17,9 +19,13 @@ import { MdSnackBar } from '@angular/material';
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent extends BaseComponent implements OnDestroy {
   // States
   state = {
+    events: {
+      onReady: undefined,
+      onProfileLoaded: undefined
+    },
     isProcessing: false,
     isChangePasswordFailed: false,
     changePasswordMsg: ''
@@ -32,13 +38,36 @@ export class ChangePasswordComponent implements OnInit {
   tbx_confirm_password: FormControl;
 
   constructor(
-    private router: Router,
+    public router: Router,
+    public profileService: ProfileService,
     private snackBar: MdSnackBar,
     private httpService: HttpService
-  ) {}
+  ) {
+    super(
+      router,
+      profileService
+    );
 
-  ngOnInit() {
     this.initialChangePasswordForm();
+    this.subscribeEvents();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeEvents();
+  }
+
+  subscribeEvents() {
+    this.state.events.onReady = this.onReady.subscribe(() => {
+      this.childReady();
+    });
+    this.state.events.onProfileLoaded = this.onProfileLoaded.subscribe(() => {
+      // No Action
+    });
+  }
+
+  unsubscribeEvents() {
+    this.state.events.onReady.unsubscribe();
+    this.state.events.onProfileLoaded.unsubscribe();
   }
 
   initialChangePasswordForm() {
@@ -135,11 +164,11 @@ export class ChangePasswordComponent implements OnInit {
 
     const changePasswordData = new ChangePassword(this.tbx_current_password.value, this.tbx_new_password.value);
     this.httpService.put('/api/user/update/password', changePasswordData)
-    .subscribe(
-      (data) => this.changePasswordSuccess(data.json()),
-      (err) => this.changePasswordFailed(err),
-      () => this.changePasswordCompleted()
-    );
+      .subscribe(
+        (data) => this.changePasswordSuccess(data.json()),
+        (err) => this.changePasswordFailed(err),
+        () => this.changePasswordCompleted()
+      );
   }
 
   changePasswordSuccess(data) {
@@ -148,18 +177,19 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
 
+    // Clear form
+    this.resetChangePasswordForm();
+
     // Clear form error message
     this.clearError();
+
+    // Reload profile
+    this.reloadProfile();
 
     // Show message
     this.snackBar.open('Change password successful', '', {
       duration: 2000
     });
-
-    // Redirect to Signout
-    setTimeout(() => {
-      this.router.navigate(['/signout']);
-    }, 2000);
   }
 
   changePasswordFailed(err) {
