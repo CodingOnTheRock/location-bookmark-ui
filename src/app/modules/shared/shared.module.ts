@@ -11,6 +11,9 @@ import { AgmCoreModule } from '@agm/core';
 // Material Design's Modules
 import { MdInputModule, MdButtonModule, MdProgressBarModule, MdSnackBarModule, MdTooltipModule, MdAutocompleteModule } from '@angular/material';
 
+// Dropzone
+import { DropzoneModule , DropzoneConfigInterface} from 'ngx-dropzone-wrapper';
+
 // Services
 import { HttpClient } from './../../core/net/http-client';
 import { LocalStorageUtils } from './../../core/browser/local-storage-utils';
@@ -29,6 +32,7 @@ import { AccountInfoComponent } from './components/account-info/account-info.com
 import { MapComponent } from './components/map/map/map.component';
 import { LocationInfoComponent } from './components/map/location-info/location-info.component';
 import { MarkerComponent } from './components/map/marker/marker.component';
+import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
 
 // Environment
 import { environment } from './../../../environments/environment';
@@ -50,7 +54,9 @@ import { environment } from './../../../environments/environment';
     MdProgressBarModule,
     MdSnackBarModule,
     MdTooltipModule,
-    MdAutocompleteModule
+    MdAutocompleteModule,
+
+    DropzoneModule.forRoot({})
   ],
   declarations: [
     ProgressBarComponent,
@@ -58,7 +64,8 @@ import { environment } from './../../../environments/environment';
     AccountInfoComponent,
     MapComponent,
     LocationInfoComponent,
-    MarkerComponent
+    MarkerComponent,
+    ImageUploaderComponent
   ],
   providers: [
     HttpClient,
@@ -90,7 +97,8 @@ import { environment } from './../../../environments/environment';
     AccountInfoComponent,
     MapComponent,
     LocationInfoComponent,
-    MarkerComponent
+    MarkerComponent,
+    ImageUploaderComponent
   ]
 })
 export class SharedModule { }

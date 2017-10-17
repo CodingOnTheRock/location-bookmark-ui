@@ -13,6 +13,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 
 // Routes
 const routes: Routes = [
+  { path: 'account', redirectTo: 'account/profile' },
   {
     path: 'account',
     component: AccountComponent,

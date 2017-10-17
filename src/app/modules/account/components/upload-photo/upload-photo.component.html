@@ -1,3 +1,9 @@
-<p>
-  upload-photo works!
-</p>
+<div class="container">
+  <app-image-uploader #imageUploader
+    [config]="config"
+    [message]="state.ui.message"
+    [placeholder]="state.ui.placeholder"
+    (onUploadSuccess)="onUploadPhotoSuccess($event)"
+    (onUploadError)="onUploadPhotoError($event)">
+  </app-image-uploader>
+</div>

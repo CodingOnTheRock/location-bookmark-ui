@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="dropzone-container">
+    <dropzone #dropzone
+      [config]="config" 
+      [message]="message"
+      [placeholder]="placeholder"
+      (success)="uploadSuccess($event)"
+      (error)="uploadError($event)">
+    </dropzone>
+  </div>
+</div>

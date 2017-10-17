@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '//cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.css';
 
 body{
     background-color: #f1f5f8;
