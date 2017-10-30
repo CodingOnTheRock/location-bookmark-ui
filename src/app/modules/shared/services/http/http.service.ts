@@ -18,6 +18,7 @@ export class HttpService {
   createHttpHeaders() {
     let headers = new Headers();
     headers = this.createAuthorizationHeader(headers);
+    headers = this.createCacheControlHeader(headers);
 
     return headers;
   }
@@ -28,6 +29,12 @@ export class HttpService {
     if (token) {
         headers.append('Authorization', token);
     }
+
+    return headers;
+  }
+
+  createCacheControlHeader(headers: Headers) {
+    headers.append('Cache-Control', 'no-cache');
 
     return headers;
   }
